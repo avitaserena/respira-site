@@ -660,7 +660,7 @@ document.addEventListener('click',e=>{if(e.target.closest('a.lk'))return;
   case'pvsave':saveVersion(PV.kind,PV.no,PV.html);toast('Enregistré dans la fiche');break;
   case'pvclose':closePreview();break;
   case'savedev':saveVersion('Devis',S.dv.no,docDevis());toast('Devis enregistré dans la fiche');break;
-  case'sbsend':{const m=$('#sbmail').value.trim();if(!m)break;sbSendCode(m).then(()=>{toast('Code envoyé par email');syncChip()}).catch(e=>toast('Envoi impossible : '+e.message));break}
+  case'sbsend':{const m=$('#sbmail').value.trim();if(!m)break;sbSendCode(m).then(()=>{toast('Email envoyé : clique sur le lien');syncChip()}).catch(e=>toast('Envoi impossible : '+e.message));break}
   case'sbverify':sbVerify($('#sbcode').value).then(()=>{toast('Connecté');r0()}).catch(e=>toast('Code refusé : '+e.message));break;
   case'sbnow':syncNow();break;
   case'sbout':sbLogout();break;
@@ -851,7 +851,7 @@ const sbH=(tok)=>({'apikey':SB.key,'Content-Type':'application/json','Authorizat
 async function sbFetch(path,opt){const r=await fetch(SB.url+path,opt);if(!r.ok){let m='';try{m=(await r.json()).msg||''}catch(e){}const e=new Error(m||('HTTP '+r.status));e.status=r.status;throw e}return r}
 function setSes(j,email){SES={access:j.access_token,refresh:j.refresh_token,exp:Date.now()+(j.expires_in||3600)*1000-60000,uid:j.user.id,email:email||(j.user&&j.user.email)||''};store.set('respira_sb',SES)}
 async function tok(){if(!SES)throw new Error('off');if(Date.now()>SES.exp){const r=await sbFetch('/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:sbH(),body:JSON.stringify({refresh_token:SES.refresh})});setSes(await r.json(),SES.email)}return SES.access}
-async function sbSendCode(email){await sbFetch('/auth/v1/otp',{method:'POST',headers:sbH(),body:JSON.stringify({email,create_user:true})});OTPMAIL=email}
+async function sbSendCode(email){const rd=/^https?:/.test(location.protocol)?'?redirect_to='+encodeURIComponent(location.origin+location.pathname):'';await sbFetch('/auth/v1/otp'+rd,{method:'POST',headers:sbH(),body:JSON.stringify({email,create_user:true})});OTPMAIL=email}
 async function sbVerify(code){const r=await sbFetch('/auth/v1/verify',{method:'POST',headers:sbH(),body:JSON.stringify({type:'email',email:OTPMAIL,token:code.trim()})});setSes(await r.json(),OTPMAIL);SYNC='idle';await syncNow(true)}
 function sbLogout(){SES=null;store.del('respira_sb');SYNC='off';SYNCMSG='';r0()}
 function schedPush(){if(!SES||CONFL)return;clearTimeout(pushT);SYNC='saving';pushT=setTimeout(pushNow,1500);syncChip()}
@@ -865,7 +865,7 @@ async function syncNow(first){if(!SES)return;try{const t=await tok();const r=awa
 function applyRemote(rem){const d=rem.db||{};DB=Object.assign({clients:[],cnt:{},lastExport:'',tasks:[]},d);DB.synced=rem.updated_at;DB.upd=rem.updated_at;DB.dirty=false;store.set('respira_crm',DB);CONFL=null;SYNC='ok';SYNCMSG='Données récupérées depuis la sauvegarde en ligne';if(!cur)r0()}
 function syncChip(){const el=document.getElementById('syncbox');if(el)el.innerHTML=syncHtml()}
 function syncHtml(){
- if(!SES)return `<div class="sync"><div><b>Sauvegarde en ligne</b><small>Non connectée. Tes données sont seulement dans ce navigateur.</small></div>${OTPMAIL?`<div class="fbar" style="margin:0"><input type="text" id="sbcode" placeholder="Code reçu par email" inputmode="numeric"><button class="btn" id="sbverify">Valider</button></div>`:`<div class="fbar" style="margin:0"><input type="email" id="sbmail" placeholder="Ton adresse email"><button class="btn" id="sbsend">Recevoir un code</button></div>`}</div>`;
+ if(!SES)return `<div class="sync"><div><b>Sauvegarde en ligne</b><small>${OTPMAIL?'Email envoyé : ouvre-le et clique sur « Sign in » / « Confirm ». Tu reviens ici connectée.':'Non connectée. Tes données sont seulement dans ce navigateur.'}</small></div>${OTPMAIL?`<div class="fbar" style="margin:0"><input type="text" id="sbcode" placeholder="Ou code à 6 chiffres, si présent" inputmode="numeric"><button class="btn" id="sbverify">Valider</button></div>`:`<div class="fbar" style="margin:0"><input type="email" id="sbmail" placeholder="Ton adresse email"><button class="btn" id="sbsend">Recevoir un lien de connexion</button></div>`}</div>`;
  if(CONFL)return `<div class="sync warn"><div><b>Deux versions différentes</b><small>La sauvegarde en ligne date du ${new Date(CONFL.updated_at).toLocaleString('fr-FR')} et ce navigateur contient des changements plus récents ou différents.</small></div><div class="fbar" style="margin:0"><button class="btn" id="sbkeep">Garder ce navigateur</button><button class="btn ghost" id="sbtake">Prendre la version en ligne</button></div></div>`;
  const lab={ok:'Sauvegardé en ligne',saving:'Enregistrement…',idle:'Connecté',err:'Hors ligne'}[SYNC]||'Connecté';
  return `<div class="sync ${SYNC==='err'?'warn':''}"><div><b>${lab}</b><small>${esc(SYNCMSG||SES.email||'')}</small></div><div class="fbar" style="margin:0"><button class="btn ghost" id="sbnow">Synchroniser</button><button class="btn ghost" id="sbout">Se déconnecter</button></div></div>`}
@@ -940,4 +940,7 @@ addEventListener('resize',fitC);
 
 go(0);
 if(SES)syncNow();
+(async()=>{const h=location.hash||'';if(!/access_token=|error=/.test(h))return;const p=new URLSearchParams(h.replace(/^#/,''));history.replaceState(null,'',location.pathname+location.search);
+ if(p.get('error')){toast('Lien expiré ou déjà utilisé : redemande un lien');return}
+ try{const j={access_token:p.get('access_token'),refresh_token:p.get('refresh_token'),expires_in:+p.get('expires_in')||3600};const r=await sbFetch('/auth/v1/user',{headers:sbH(j.access_token)});j.user=await r.json();setSes(j,j.user.email);SYNC='idle';OTPMAIL='';toast('Connectée');await syncNow(true);r0()}catch(e){toast('Connexion impossible : '+e.message)}})();
 </script></body></html>
