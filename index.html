@@ -14,10 +14,16 @@
 <meta property="og:url" content="https://xn--respir-nta.fr/" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236E6B4E'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-weight='700' font-size='40' text-anchor='middle' fill='white'%3ER%3C/text%3E%3C/svg%3E" />
 <script>document.documentElement.classList.add('js');</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-display-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/playfair-display-latin-700-normal.woff2) format('woff2');}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/playfair-display-latin-800-normal.woff2) format('woff2');}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url(fonts/playfair-display-latin-700-italic.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-italic.woff2) format('woff2');}
   :root {
     --primary:#6E6B4E; --second:#A9A47A; --accent:#E3DFC4; --ink:#34331F;
     --card:#ECE6DC; --muted:#8A8072; --paper:#FFFFFF;
@@ -285,6 +291,7 @@
   .row .icon-circle { margin-bottom:0; flex-shrink:0; width:56px; height:56px; }
   .row:hover .icon-circle { transform:scale(1.1) rotate(-6deg); background:var(--primary); }
   .row .icon-img { width:28px; height:28px; }
+  .row .icon-circle svg { width:28px; height:28px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
   .row .row-text { flex:1; }
   .row h3 { font-size:1.1rem; font-weight:700; margin-bottom:6px; }
   .row p { color:var(--muted); font-size:0.93rem; margin:0; }
@@ -335,6 +342,12 @@
   .submit-row { display:flex; align-items:center; gap:16px; margin-top:8px; }
   form .cta-btn { background:var(--primary); color:#fff; }
   form .cta-btn:hover { background:var(--ink); }
+  .consent { display:flex; gap:10px; align-items:flex-start; font-size:.82rem; line-height:1.5; color:var(--ink); margin:4px 0 14px; cursor:pointer; }
+  .consent input { margin-top:3px; accent-color:var(--primary); flex-shrink:0; width:16px; height:16px; }
+  .consent a { color:var(--primary); text-decoration:underline; }
+  .legal-links { margin-top:14px; font-size:.8rem; opacity:.85; }
+  .legal-links a { color:var(--accent); text-decoration:underline; text-underline-offset:3px; }
+  .legal-links a:hover { color:#fff; }
   .form-note { font-size:0.82rem; color:var(--muted); margin:14px 0 0; }
 
   footer { background:var(--ink); color:var(--accent); padding:44px 0; text-align:center; font-size:0.85rem; position:relative; }
@@ -404,6 +417,29 @@
     .marquee span { font-size:.95rem; gap:36px; padding:0 18px; }
     #contact .wind { width:200px; }
   }
+
+  /* ---- outils sur mesure ---- */
+  #outils { background:var(--paper); }
+  .tool-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:48px; margin-top:44px; align-items:start; }
+  .tool-list { list-style:none; margin:0; padding:0; }
+  .tool-list li { padding:18px 0 18px 22px; border-bottom:1px solid rgba(52,51,31,.1); position:relative; }
+  .tool-list li::before { content:""; position:absolute; left:0; top:27px; width:8px; height:8px; border-radius:50%; background:var(--primary); }
+  .tool-list li:last-child { border-bottom:0; }
+  .tool-list b { display:block; font-family:'Playfair Display',Cambria,serif; font-size:1.1rem; margin-bottom:4px; }
+  .tool-list span { color:var(--muted); font-size:.95rem; }
+  .tool-mock { background:var(--card); border-radius:20px; padding:18px; box-shadow:0 30px 60px -34px rgba(52,51,31,.5); border:1px solid rgba(52,51,31,.08); }
+  .tm-bar { display:flex; align-items:center; gap:6px; margin-bottom:14px; }
+  .tm-bar i { width:10px; height:10px; border-radius:50%; background:rgba(52,51,31,.2); }
+  .tm-bar span { margin-left:auto; font-size:.72rem; color:var(--muted); letter-spacing:.04em; }
+  .tm-search { background:#fff; border-radius:10px; padding:11px 14px; color:var(--muted); font-size:.9rem; margin-bottom:10px; border:1.5px solid #D9D1C2; }
+  .tm-row { display:flex; justify-content:space-between; align-items:center; gap:10px; background:#fff; border-radius:12px; padding:12px 14px; margin-top:8px; }
+  .tm-row strong { display:block; font-size:.92rem; }
+  .tm-row small { color:var(--muted); font-size:.78rem; }
+  .pill { font-size:.75rem; font-weight:600; padding:5px 11px; border-radius:999px; white-space:nowrap; }
+  .pill.ok { background:rgba(110,107,78,.15); color:var(--primary); }
+  .pill.wait { background:#F3E7A8; color:var(--ink); }
+  .pill.draft { background:rgba(52,51,31,.08); color:var(--ink); }
+  @media (max-width:900px) { .tool-grid { grid-template-columns:1fr; gap:32px; } }
 </style>
 </head>
 <body>
@@ -416,6 +452,7 @@
     <div class="nav-right">
       <nav class="links" id="navLinks" aria-label="Navigation principale">
         <a href="#professionnels">Professionnels</a>
+        <a href="#outils">Outils sur mesure</a>
         <a href="#particuliers">Particuliers</a>
         <a href="#pourquoi">Pourquoi Respirà</a>
       </nav>
@@ -508,45 +545,74 @@
   <div class="wrap">
     <div class="section-label reveal">Pour les entreprises</div>
     <h2 class="big-title reveal">Professionnels</h2>
-    <p class="subtitle reveal">TPE, artisans, indépendants, professions libérales — un appui administratif régulier, sans les contraintes d'une embauche.</p>
+    <p class="subtitle reveal">TPE, artisans, indépendants, professions libérales — un appui administratif régulier, une écriture sans faute, et des outils pratiques créés pour votre activité, sans les contraintes d'une embauche.</p>
     <div class="pricing-grid">
       <div class="price-card reveal" style="transition-delay:0s">
         <div class="label">Sérénité</div>
-        <div class="amount">~320&nbsp;€</div>
+        <div class="amount">~400&nbsp;€</div>
         <div class="unit">/ mois · 10h</div>
         <ul>
-          <li>Facturation &amp; relances clients</li>
-          <li>Rédaction de courriers officiels</li>
+          <li>Gestion quotidienne des emails &amp; de l'agenda</li>
+          <li>Courriers et documents, orthographe soignée</li>
           <li>Classement et archivage</li>
-          <li>Transmission des pièces au comptable</li>
+          <li>Suivi des dossiers en cours</li>
         </ul>
       </div>
       <div class="price-card dark reveal" style="transition-delay:.12s">
         <div class="label">Confort</div>
-        <div class="amount">~600&nbsp;€</div>
+        <div class="amount">~760&nbsp;€</div>
         <div class="unit">/ mois · 20h</div>
         <ul>
           <li>Tout Sérénité inclus</li>
-          <li>Gestion des emails &amp; agenda</li>
-          <li>Mise en forme de devis et documents types</li>
-          <li>Suivi et relance de dossiers en cours</li>
+          <li>Relances des factures impayées</li>
+          <li>Suivi des devis et des paiements</li>
+          <li>Préparation et transmission des pièces au comptable</li>
+          <li>Création d'outils d'aide au quotidien</li>
         </ul>
       </div>
       <div class="price-card reveal" style="transition-delay:.24s">
         <div class="label">Ponctuel</div>
-        <div class="amount">35&nbsp;€</div>
+        <div class="amount">40&nbsp;€</div>
         <div class="unit">/ heure</div>
         <ul>
           <li>Mise en forme de documents</li>
-          <li>Rédaction one-shot</li>
+          <li>Rédaction et relecture soignées</li>
+          <li>Création d'outils d'aide au quotidien</li>
           <li>Mise en ordre boîte mail / fichiers</li>
-          <li>Devis gratuit sous 24h</li>
         </ul>
       </div>
     </div>
-    <p class="fine-print">Sans engagement · Devis gratuit sous 24h</p>
+    <p class="fine-print">Forfaits donnés à titre indicatif : les tarifs sont adaptables selon vos besoins · Sans engagement · Devis gratuit sous 24h</p>
   </div>
 </section>
+
+<section id="outils">
+  <div class="wrap">
+    <div class="section-label reveal">Sur mesure</div>
+    <h2 class="big-title reveal">Vos outils du quotidien.</h2>
+    <p class="subtitle reveal">Je crée pour vous un petit outil simple, à votre image, que vous prenez ensuite en main : vos clients, vos devis et vos factures réunis au même endroit.</p>
+    <div class="tool-grid">
+      <ul class="tool-list reveal">
+        <li><b>Tous vos clients au même endroit</b><span>Une fiche par client, retrouvée en tapant simplement son nom.</span></li>
+        <li><b>Devis : où en êtes-vous&nbsp;?</b><span>Créé, envoyé, accepté : vous voyez l'état de chaque devis d'un coup d'œil.</span></li>
+        <li><b>Factures : réglées ou non&nbsp;?</b><span>Repérez en un instant celles qui attendent un paiement, pour relancer à temps.</span></li>
+        <li><b>Tri par type de client</b><span>Particuliers, entreprises, partenaires : vos listes triées comme vous en avez besoin.</span></li>
+        <li><b>Vos tâches du jour</b><span>Ce qu'il y a à faire aujourd'hui, au même endroit, sans rien oublier.</span></li>
+      </ul>
+      <div class="tool-mock reveal" aria-label="Exemple d'outil : suivi des clients et des factures (données fictives)">
+        <div class="tm-bar"><i></i><i></i><i></i><span>Exemple · données fictives</span></div>
+        <div class="tm-search">🔍 Rechercher un client…</div>
+        <div class="tm-row"><div><strong>Atelier Lumière</strong><small>Entreprise</small></div><span class="pill ok">Facture réglée</span></div>
+        <div class="tm-row"><div><strong>Cabinet Dupont</strong><small>Profession libérale</small></div><span class="pill wait">À relancer</span></div>
+        <div class="tm-row"><div><strong>Marie L.</strong><small>Particulier</small></div><span class="pill draft">Devis envoyé</span></div>
+        <div class="tm-row"><div><strong>Boulangerie du Port</strong><small>Entreprise</small></div><span class="pill ok">Facture réglée</span></div>
+      </div>
+    </div>
+    <p class="fine-print">Un outil simple, que vous gardez et que vous pouvez faire évoluer. Tarif selon le besoin, après un premier échange gratuit.</p>
+  </div>
+</section>
+
+
 
 <section id="methode">
   <div class="wrap">
@@ -597,12 +663,20 @@
         <div class="row-price">35&nbsp;€ / heure</div>
       </div>
       <div class="row reveal" style="transition-delay:.2s">
-        <div class="icon-circle light"><img class="icon-img" src="data:image/png;base64,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" alt="" /></div>
+        <div class="icon-circle light"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
         <div class="row-text">
           <h3>Assistanat ponctuel</h3>
-          <p>Gestion d'agenda, recherches ciblées, rédaction de courriers, suivi de dossiers en cours.</p>
+          <p>Recherches ciblées, rédaction et relecture de courriers, suivi de dossiers en cours.</p>
         </div>
         <div class="row-price">35&nbsp;€ / heure</div>
+      </div>
+      <div class="row reveal" style="transition-delay:.3s">
+        <div class="icon-circle light"><img class="icon-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAK5ElEQVR4nO3d0Y6V5RXG8XUgcA4JFDjFejetPan2pPGgqQkDeNCmrWdegApXY70BHWiEcFiDd2BsgoOJRMPTfPYjZtKBHVyz9vO96/3/LmBYz/Pu9e49w8zeEfiJpHOSbkq6K+mJTt/yNQ8l3ZB0ltqPo3/YSLoq6aH254GkKxw5/WMbzzz7XP7n7vNKgP5hJumWfA5icvQPK0n3jBfA4ezHT/+wknRkvACOZj9++oeVzGY/fvqHFQ9A+sfEuADoHxPjAqB/TIwLgP4xMS4A+sfEuADoHxPjAqB/TIwLgP4xMS4A+sfEuADoHxPjAqB/TIwLgP4xMS4A+sfEuADoHxPjAqB/TIwLgP4xMS4A+sfEuADoHxPjAqB/TIwLgP4xMS4A+sfEuADoHxPjAqB/TIwLgP4xMS4A+oeZpEuS3pZ0R9Knkr6U9B9JT90LCiQ9XR/LX66P7TvrY/1SzEzSeUk3JP0r2zAwoGfrB6MuO3A+ZiHpqqTbkp64TwDYiGUXPpZ0JbqS9Jqk9yR9624b2KjvJH0g6Wx0IunXkh642wUG8UDS69GBpN/xrA+8suWV8psxMknvSPrh1bMDkPSjpHdjRJL+zBECp+JmDPiyf7m9AOQtu/TbGIGka5Ien0JoAD87kvRGbJmkM/y0Hyj934EzsVWS/l6XHYCkv8aGf8OP3+4D6r8VuBxbs/56L4B6H8aWSLrAsz+wN8sr7QuxFcv/U+4vOwBJB7EV/EkvsHd3YwskXVz/thnA/jzbxJuKSPrDHkMD+NlbW7gAlrc4ArB/t7dwASzvcwZg/z7ZwgXwlSE4AOnRFi6AbzgJwOLrLVwAvHU34PF9zP7BGsDMws1dADCzcHMXAMws3NwFADMLN3cBwMzCzV0AMLNwcxcAzCzc3AUAMws3dwHAzMLNXQAws3BzFwDMLNzcBQAzCzd3AcDMws1dADCzcHMXAMws3NwFADMLN3cBwMzCzV0AMLNwcxcAzCzc3AUAMws3dwHAzMLNXQAws3BzFwDMLNzcBQAzC7f2AYGE9vvRPiCQ0H4/2gcEEtrvR/uAQEL7/WgfEEhovx/tAwIJ7fejfUAgof1+tA8IJLTfj/YBgYT2+9E+IJDQfj/aBwQS2u9H+4BAQvv9aB8QSGi/H+0DAgnt96N9QCCh/X60DwgktN+P9gGBhPb70T4gkNB+P9oHBBLa70f7gEBC+/1oHxBIaL8f7QMCCe33o31AIKH9frQPCCS034/2AYGE9vvRPiCQ0H4/2gcEEtrvR/uAQEL7/WgfEEhovx/tAwIJ7fejfUAgof1+tA8IJLTfjy4BJZ2TdFPSXUlPCqIsX/NQ0g1JZ5m/V/8vomLh1iGgpKuSHmp/Hki6wvw9+n+Z6iDhNnrA9Zlnnw++5+6fxjMR83v730XFwm30gJJuyeeA+cfuf5fqAOE2ekBJ9+RzyPxj979LdYBwGz2gpCP5HDH/2P3vUh0g3EYPWD1/dT7m9/bvPp9wGz1g9fzV+Zjf27/7fMJt9IDV81fnY35v/+7zCbfRA1bPX52P+b39u88n3EYPWD1/dT7m9/bvPp9wGz1g9fzV+Zjf27/7fMJt9IDV81fnY35v/+7zCbfRA1bPX52P+b39u88n3EYPWD1/dT7m9/bvPp9wGz1g9fzV+Zjf27/7fMJt9IDV81fnY35v/+7zCbfRA1bPX52P+b39u88n3EYPWD1/dT7m9/bvPp9wGz1g9fzV+Zjf27/7fMJt9IDV81fnY35v/+7zCbfRA1bPX52P+b39u88n3EYPWD1/dT7m9/bvPp9wGz1g9fzV+Zjf27/7fMJt9IDV81fnY35v/+7zCbfRA1bPX52P+b39u88n3EYPaH5T0MfMP3b/u1QHCLfRA64fReXyOfOP3f8u1QHCbfSA62fFuVxn/rH736U6QLiNHnD5eKj1s+L27QtJZ5h/7P53qQ4Rbh0CLh8UuecH4fLgu8z8Pfp/meog4dYl4PpK4GD5vrDoB4PL1/xsedlZ8czD/N7+X0TFwq19QCCh/X60DwgktN+P9gGBhPb70T4gkNB+P9oHBBLa70f7gEBC+/1oHxBIaL8f7QMCCe33o31AIKH9frQPCCS034/2AYGE9vvRPiCQ0H4/2gcEEtrvR/uAQEL7/WgfEEhovx/tAwIJ7fejS0BJ5yTdXN8k9ElBlOVrHq7vQXiW+Xv1/yIqFm4dAkq6Kumh9md5+6srzN+j/5epDhJuowdcn3n2+eB77v5pPBMxv7f/XVQs3EYPKOmWfA6Yf+z+d6kOEG6jB5R0Tz6HzD92/7tUBwi30QOaPxrsiPnH7n+X6gDhNnrA6vmr8zG/t3/3+YTb6AGr56/Ox/ze/t3nE26jB6yevzof83v7d59PuI0esHr+6nzM7+3ffT7hNnrA6vmr8zG/t3/3+YTb6AGr56/Ox/ze/t3nE26jB6yevzof83v7d59PuI0esHr+6nzM7+3ffT7hNnrA6vmr8zG/t3/3+YTb6AGr56/Ox/ze/t3nE26jB6yevzof83v7d59PuI0esHr+6nzM7+3ffT7hNnrA6vmr8zG/t3/3+YTb6AGr56/Ox/ze/t3nE26jB6yevzof83v7d59PuI0esHr+6nzM7+3ffT7hNnrA6vmr8zG/t3/3+YTb6AGr56/Ox/ze/t3nE26jB6yevzof83v7d59PuI0esHr+6nzM7+3ffT7hNnpA85uCPmb+sfvfpTpAuI0ecP0oKpfPmX/s/nepDhBuowdcPyvO5Trzj93/LtUBwm30gMvHQ62fFbdvX0g6w/xj979LdYhw6xBw+aDIPT8IlwffZebv0f/LVAcJty4B11cCB8v3hUU/GFy+5mfLy86KZx7m9/b/IioWbu0DAgnt96N9QCCh/X60DwgktN+P9gGBhPb70T4gkNB+P9oHBBLa70f7gEBC+/1oHxBIaL8f7QMCCe33o31AIKH9frQPCCS034/2AYGE9vvRPiCQ0H4/2gcEEtrvR/uAQEL7/WgfEEhovx/tAwIJ7fejfUAgof1+tA8IJLTfj/YBgYT2+9E+IJDQfj/aBwQS2u9H+4BAQvv9aB8QSGi/H+0DAgnt96N9QCCh/X60DwgktN+P9gGBhPb70T4gkNB+P9oHBBLa70f7gEBC+/1oHxBIaL8f7QMCCe33o31AIKH9frQPCCS034/2AYGE9vvRPiCQ0H4/qgNKuuLOCPwSkq5WL0e4VQeU9A93RuCXkPR+9XKEW3VASU+XS4BXAhjsmf/99bFbagthy0MCONH3W7gAvjl5NgDFvt7CBfCoOiWAEz3awgXw6cmzASj2yRYugDvVKQGc6PYWLoC3T54NQLHfb+ECuCjpWXVSAMcsO3cptkDSveOzASh2GFsh6UZ1WgDHXI+tkHRB0pPj8wEosuzahdgSSR9XpQVwzIexNcvv6ks6Oj4ngFP2raRfxRZJ+ttppwVwzF9iqySdkfTg+LwATsn9ZcdiyyRdk/T4tBID+Mny7fUbMQJJb0r68X9zA0haduk3MRJJf+Q3BIFT+Y2/P8WIJL0j6Yd8B8C0z/zvxsjWbwf4mQDwah4P97L/RSS9zv8OAK/00/5r0Ymk1yS9t/4iA4D/952kDySdja4kXZb0EX87ABz73f6PNvsbfhUknV//ivAu/1uASX+6fyjpYNmFmNn6piJvLW9xJOmfkv69vtswbzmO0T1dH8vLY3p5bC+P8eWxftG9d8u//1/OwKJ5jJ3tnQAAAABJRU5ErkJggg==" alt="" /></div>
+        <div class="row-text">
+          <h3>Locations saisonnières</h3>
+          <p>Rédaction et optimisation d'annonces, réponses aux messages des voyageurs, gestion du calendrier, saisie des factures sur JD2M. Forfait établi selon l'ampleur de la mission.</p>
+        </div>
+        <div class="row-price">Forfait sur mesure</div>
       </div>
     </div>
     <p class="fine-print">Sans engagement · Devis gratuit sous 24h</p>
@@ -618,7 +692,7 @@
         <div class="icon-circle"><img class="icon-img" src="data:image/png;base64,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" alt="" /></div>
         <div>
           <h3>Rigueur &amp; méthode</h3>
-          <p>Chaque dossier est traité avec méthode, jusqu'à sa clôture.</p>
+          <p>Une orthographe et une rédaction irréprochables, et chaque dossier traité avec méthode jusqu'à sa clôture.</p>
         </div>
       </div>
       <div class="why-card reveal" style="transition-delay:.1s">
@@ -639,7 +713,7 @@
         <div class="icon-circle"><img class="icon-img" src="data:image/png;base64,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" alt="" /></div>
         <div>
           <h3>Flexibilité totale</h3>
-          <p>Sans charges, sans engagement — formule ajustable selon vos besoins.</p>
+          <p>Sans charges, sans engagement — tarifs et formules ajustables selon vos besoins.</p>
         </div>
       </div>
     </div>
@@ -699,7 +773,9 @@
             <option>Facturation &amp; relances</option>
             <option>Courriers &amp; démarches</option>
             <option>Tri &amp; archives</option>
-            <option>Gestion d'agenda</option>
+            <option>Emails &amp; agenda</option>
+            <option>Locations saisonnières</option>
+            <option>Outils &amp; méthodes sur mesure</option>
             <option>Autre</option>
           </select>
         </div>
@@ -707,10 +783,12 @@
           <label for="message">Votre message</label>
           <textarea id="message" name="message" placeholder="Décrivez en quelques mots ce que vous cherchez à déléguer..." required></textarea>
         </div>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true" />
+        <label class="consent"><input type="checkbox" name="consent" required /><span>J'accepte que mes données soient utilisées pour répondre à ma demande, comme indiqué dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</span></label>
         <div class="submit-row">
           <button type="submit" class="cta-btn">Envoyer ma demande <span class="arr">→</span></button>
         </div>
-        <p class="form-note" id="formMsg" role="status">En envoyant, votre messagerie s'ouvre avec le message pré-rempli, prêt à partir.</p>
+        <p class="form-note" id="formMsg" role="status">Réponse sous 24&nbsp;h. Vos données ne servent qu'à traiter votre demande.</p>
       </form>
     </div>
   </div>
@@ -719,6 +797,7 @@
 <footer>
   <div class="tagline">Respirà — respirez, je m'occupe du reste.</div>
   <div>Assistance administrative indépendante · Porto-Vecchio, Corse</div>
+  <div class="legal-links"><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Politique de confidentialité</a> · <a href="cgv.html">CGV</a></div>
 </footer>
 <a class="totop" id="toTop" href="#hero" aria-label="Retour en haut">↑</a>
 
@@ -828,18 +907,34 @@
     });
   });
 
-  /* ---- formulaire : ouvre la messagerie avec le message pré-rempli ---- */
+  /* ---- formulaire : envoi via Formspree (repli : messagerie) ---- */
+  /* Remplacer FORMSPREE_ID par l'identifiant du formulaire (https://formspree.io/f/XXXXXXXX) */
+  var FORMSPREE_ID = '';
   d.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    var f = e.target;
-    var nom = f.nom.value, email = f.email.value, tel = f.tel.value || '—';
-    var profil = f.profil.value, besoin = f.besoin.value, message = f.message.value;
-    var subject = 'Demande via Respirà — ' + besoin;
-    var body = 'Nom : ' + nom + '\nEmail : ' + email + '\nTéléphone : ' + tel +
-      '\nProfil : ' + profil + '\nBesoin : ' + besoin + '\n\nMessage :\n' + message;
-    var to = CONTACT_USER + '@' + CONTACT_HOST;
-    d.getElementById('formMsg').textContent = 'Votre messagerie s\'ouvre avec le message prêt à partir. Merci !';
-    window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    var f = e.target, msg = d.getElementById('formMsg'), btn = f.querySelector('button[type=submit]');
+    if (f._gotcha && f._gotcha.value) return;
+    var data = {
+      nom: f.nom.value, email: f.email.value, tel: f.tel.value || '—', profil: f.profil.value,
+      besoin: f.besoin.value, message: f.message.value, consentement: 'oui',
+      _subject: 'Demande via Respirà — ' + f.besoin.value
+    };
+    if (FORMSPREE_ID) {
+      btn.disabled = true; msg.textContent = 'Envoi en cours…';
+      fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+        method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data)
+      }).then(function (r) {
+        if (r.ok) { f.reset(); msg.textContent = 'Merci, votre demande est bien envoyée. Je vous réponds sous 24 h.'; }
+        else { msg.textContent = 'Envoi impossible pour le moment. Écrivez-moi directement à ' + CONTACT_USER + '@' + CONTACT_HOST + '.'; }
+      }).catch(function () {
+        msg.textContent = 'Envoi impossible pour le moment. Écrivez-moi directement à ' + CONTACT_USER + '@' + CONTACT_HOST + '.';
+      }).then(function () { btn.disabled = false; });
+      return;
+    }
+    var body = 'Nom : ' + data.nom + '\nEmail : ' + data.email + '\nTéléphone : ' + data.tel +
+      '\nProfil : ' + data.profil + '\nBesoin : ' + data.besoin + '\n\nMessage :\n' + data.message;
+    msg.textContent = 'Votre messagerie s\'ouvre avec le message prêt à partir. Merci !';
+    window.location.href = 'mailto:' + CONTACT_USER + '@' + CONTACT_HOST + '?subject=' + encodeURIComponent(data._subject) + '&body=' + encodeURIComponent(body);
   });
 })();
 </script>
