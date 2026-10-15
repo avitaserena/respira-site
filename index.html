@@ -143,7 +143,7 @@
     box-shadow:0 30px 60px -30px rgba(20,20,10,.6), inset 0 1px 0 rgba(255,255,255,.25);
   }
   .hero-card .hc-title { font-size:.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
-  .hero-card .hc-title::before { content:""; width:8px; height:8px; border-radius:50%; background:#C9D49A; box-shadow:0 0 0 0 rgba(201,212,154,.7); animation:ping 2.2s infinite; }
+  .hero-card .hc-title::before { content:""; width:8px; height:8px; border-radius:50%; background:#ECE6DC; box-shadow:0 0 0 0 rgba(236,230,220,.7); animation:ping 2.2s infinite; }
   @keyframes ping { 70% { box-shadow:0 0 0 10px rgba(201,212,154,0); } 100% { box-shadow:0 0 0 0 rgba(201,212,154,0); } }
   .hero-card ul { list-style:none; margin:0; padding:0; }
   .hero-card li { display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.14); font-size:.98rem; }
@@ -437,7 +437,7 @@
   .tm-row small { color:var(--muted); font-size:.78rem; }
   .pill { font-size:.75rem; font-weight:600; padding:5px 11px; border-radius:999px; white-space:nowrap; }
   .pill.ok { background:rgba(110,107,78,.15); color:var(--primary); }
-  .pill.wait { background:#F3E7A8; color:var(--ink); }
+  .pill.wait { background:#D9D1C2; color:var(--ink); }
   .pill.draft { background:rgba(52,51,31,.08); color:var(--ink); }
   @media (max-width:900px) { .tool-grid { grid-template-columns:1fr; gap:32px; } }
 
@@ -457,7 +457,7 @@
   .chips button { border:1.5px solid var(--primary); background:transparent; color:var(--primary); border-radius:999px; padding:6px 13px; font:600 .78rem 'Inter',sans-serif; cursor:pointer; transition:.2s; }
   .chips button.on { background:var(--primary); color:#fff; }
   .slide .tm-row { background:var(--card); margin-top:8px; }
-  .pill.late { background:#F4DDD3; color:#8E3B1F; }
+  .pill.late { background:#D9D1C2; color:#34331F; }
   .fiche-h { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
   .fiche-h strong { display:block; font-family:'Playfair Display',Cambria,serif; font-size:1.15rem; }
   .fiche-h small { color:var(--muted); font-size:.8rem; }
@@ -477,13 +477,13 @@
   .tasks li { display:flex; align-items:center; gap:12px; padding:11px 12px; background:var(--card); border-radius:11px; margin-top:7px; font-size:.9rem; }
   .tasks li span { flex:1; min-width:0; }
   .tasks li em { font-style:normal; font-size:.74rem; color:var(--muted); white-space:nowrap; }
-  .tasks li em.alert { color:#8E3B1F; font-weight:600; }
-  .tasks li em.alert b { display:inline-grid; place-items:center; width:17px; height:17px; border-radius:50%; background:#B4552D; color:#fff; font-size:.7rem; margin-right:3px; }
+  .tasks li em.alert { color:#34331F; font-weight:600; }
+  .tasks li em.alert b { display:inline-grid; place-items:center; width:17px; height:17px; border-radius:50%; background:#34331F; color:#fff; font-size:.7rem; margin-right:3px; }
   .tasks li button { flex:0 0 24px; width:24px; height:24px; border-radius:50%; border:2px solid var(--primary); background:#fff; cursor:pointer; padding:0; display:grid; place-items:center; }
   .tasks li button i { width:10px; height:6px; border-left:2.5px solid #fff; border-bottom:2.5px solid #fff; transform:rotate(-45deg) translate(1px,-1px); opacity:0; }
   .tasks li.done button { background:var(--primary); } .tasks li.done button i { opacity:1; }
   .tasks li.done span { text-decoration:line-through; color:var(--muted); }
-  .tasks li.urgent { box-shadow:inset 3px 0 0 #B4552D; }
+  .tasks li.urgent { box-shadow:inset 3px 0 0 #34331F; }
   .tip { font-size:.74rem; color:var(--muted); margin:10px 0 0; }
   .tbl { font-size:.84rem; }
   .tbl .th, .tbl .tr { display:grid; grid-template-columns:.7fr 1.5fr .8fr 1.1fr; gap:8px; align-items:center; padding:10px 8px; }
@@ -501,7 +501,7 @@
   .kpi.big small { color:var(--accent); }
   .kpi b { font-family:'Playfair Display',Cambria,serif; font-size:1.5rem; }
   .kpi.big b { font-size:2.2rem; }
-  .kpi.warn { box-shadow:inset 0 -3px 0 #B4552D; }
+  .kpi.warn { box-shadow:inset 0 -3px 0 #34331F; }
   .bars { display:flex; align-items:flex-end; gap:10px; height:110px; margin-top:16px; padding:0 4px; }
   .bars div { flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:5px; }
   .bars i { display:block; width:100%; background:var(--second); border-radius:6px 6px 2px 2px; }
