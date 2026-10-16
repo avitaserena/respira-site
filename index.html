@@ -237,6 +237,16 @@
   .price-card li::before { content:""; position:absolute; left:0; top:.55em; width:10px; height:2px; background:currentColor; border-radius:2px; transition:width .3s var(--ease); }
   .price-card:hover li::before { width:14px; }
   .price-card:hover li { transform:translateX(4px); }
+  .bespoke { margin-top:32px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:24px 30px; border-radius:18px; background:#fff; }
+  .bespoke b { font-family:'Playfair Display',Georgia,serif; font-size:1.25rem; display:block; margin-bottom:4px; }
+  .bespoke span { color:var(--ink); font-size:.95rem; }
+  .bespoke a { background:var(--primary); color:#fff; padding:11px 22px; border-radius:999px; font-weight:600; font-size:.9rem; text-decoration:none; white-space:nowrap; }
+  .bespoke a:hover { background:var(--ink); }
+  .vol { margin:6px 0 22px; padding:20px 20px 4px; border-radius:16px; background:rgba(255,255,255,.55); }
+  .vol[hidden] { display:none; }
+  .vol h3 { font-size:1.15rem; margin-bottom:4px; color:var(--ink); }
+  .vol p { margin:0 0 16px; font-size:.85rem; color:var(--muted); }
+  .vol .field select { background:#fff; }
   .fine-print { margin-top:28px; font-style:italic; color:var(--muted); font-size:0.9rem; }
 
   /* ---- comparatif ---- */
@@ -657,6 +667,10 @@
         </ul>
       </div>
     </div>
+    <div class="bespoke reveal">
+      <div><b>Moins de 10&nbsp;h ou plus de 20&nbsp;h par mois&nbsp;?</b><span>Un forfait sur mesure, chiffré d'après votre activité : volume d'emails, de factures, de relances. Devis gratuit sous 24&nbsp;h.</span></div>
+      <a href="#contact">Demander un devis sur mesure</a>
+    </div>
     <p class="fine-print">Forfaits donnés à titre indicatif : les tarifs sont adaptables selon vos besoins · Sans engagement · Devis gratuit sous 24h</p>
   </div>
 </section>
@@ -916,6 +930,29 @@
             <option>Autre</option>
           </select>
         </div>
+        <div class="vol" id="volBlock" hidden>
+          <h3>Votre activité en quelques chiffres</h3>
+          <p>Facultatif. Des ordres de grandeur suffisent : ils me permettent de vous proposer un devis juste, dès ma première réponse.</p>
+          <div class="field"><label for="activite">Votre activité</label><input type="text" id="activite" name="activite" placeholder="Ex. : électricien, sophrologue, cabinet d'architecte…" /></div>
+          <div class="field"><label for="v_mails">Emails reçus par semaine</label><select id="v_mails" name="v_mails"><option value="">Je ne sais pas</option><option>Moins de 20</option><option>20 à 50</option><option>50 à 100</option><option>100 à 200</option><option>Plus de 200</option></select></div>
+          <div class="field"><label for="v_rdv">Rendez-vous à gérer par semaine</label><select id="v_rdv" name="v_rdv"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>Plus de 10</option></select></div>
+          <div class="field"><label for="v_courrier">Courriers papier par mois</label><select id="v_courrier" name="v_courrier"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 20</option><option>Plus de 20</option></select></div>
+          <div class="field"><label for="v_fact">Factures émises par mois</label><select id="v_fact" name="v_fact"><option value="">Je ne sais pas</option><option>0 à 10</option><option>11 à 30</option><option>31 à 60</option><option>Plus de 60</option></select></div>
+          <div class="field"><label for="v_relances">Factures à relancer par mois</label><select id="v_relances" name="v_relances"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>11 à 25</option><option>Plus de 25</option></select></div>
+          <div class="field"><label for="v_devis">Devis envoyés par mois</label><select id="v_devis" name="v_devis"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 15</option><option>16 à 30</option><option>Plus de 30</option></select></div>
+          <div class="field"><label for="v_ferm">Fermeture dans l'année</label><select id="v_ferm" name="v_ferm"><option value="">Je ne sais pas</option><option>Aucune</option><option>1 mois</option><option>2 mois</option><option>Plus de 2 mois</option></select></div>
+          <div class="field"><label>Ce que vous aimeriez déléguer</label>
+            <div class="radio-row">
+              <label><input type="checkbox" name="deleg" value="Emails et agenda" /><span>Emails &amp; agenda</span></label>
+              <label><input type="checkbox" name="deleg" value="Courriers et classement" /><span>Courriers &amp; classement</span></label>
+              <label><input type="checkbox" name="deleg" value="Relances et suivi des devis" /><span>Relances &amp; suivi des devis</span></label>
+              <label><input type="checkbox" name="deleg" value="Factures sur mandat" /><span>Factures sur mandat</span></label>
+              <label><input type="checkbox" name="deleg" value="Transmission des pièces au comptable" /><span>Pièces au comptable</span></label>
+              <label><input type="checkbox" name="deleg" value="Outil sur mesure" /><span>Un outil sur mesure</span></label>
+            </div>
+          </div>
+          <div class="field"><label for="logiciel">Logiciel de facturation ou de comptabilité utilisé</label><input type="text" id="logiciel" name="logiciel" placeholder="Ex. : Indy, Henrici, Excel, aucun…" /></div>
+        </div>
         <div class="field">
           <label for="message">Votre message</label>
           <textarea id="message" name="message" placeholder="Décrivez en quelques mots ce que vous cherchez à déléguer..." required></textarea>
@@ -1084,6 +1121,12 @@
   /* ---- formulaire : envoi via Formspree (repli : messagerie) ---- */
   /* Remplacer FORMSPREE_ID par l'identifiant du formulaire (https://formspree.io/f/XXXXXXXX) */
   var FORMSPREE_ID = '';
+  /* bloc « activité » : visible seulement pour un professionnel */
+  (function () {
+    var vb = d.getElementById('volBlock'), radios = d.querySelectorAll('input[name=profil]');
+    function sync() { var pro = d.querySelector('input[name=profil]:checked'); vb.hidden = !(pro && pro.value === 'Professionnel'); }
+    Array.prototype.forEach.call(radios, function (r) { r.addEventListener('change', sync); }); sync();
+  })();
   d.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var f = e.target, msg = d.getElementById('formMsg'), btn = f.querySelector('button[type=submit]');
@@ -1093,6 +1136,13 @@
       besoin: f.besoin.value, message: f.message.value, consentement: 'oui',
       _subject: 'Demande via Respirà — ' + f.besoin.value
     };
+    var volTxt = '';
+    if (f.profil.value === 'Professionnel') {
+      var VOL = [['activite','Activité'],['v_mails','Emails par semaine'],['v_rdv','Rendez-vous par semaine'],['v_courrier','Courriers par mois'],['v_fact','Factures émises par mois'],['v_relances','Factures à relancer par mois'],['v_devis','Devis par mois'],['v_ferm','Fermeture dans l\'année'],['logiciel','Logiciel de facturation']];
+      var deleg = Array.prototype.map.call(f.querySelectorAll('input[name=deleg]:checked'), function (x) { return x.value; }).join(', ');
+      VOL.forEach(function (p) { var el = f.querySelector('[name=' + p[0] + ']'); data[p[1]] = (el && el.value) ? el.value : '—'; volTxt += p[1] + ' : ' + data[p[1]] + '\n'; });
+      data['À déléguer'] = deleg || '—'; volTxt += 'À déléguer : ' + data['À déléguer'] + '\n';
+    }
     if (FORMSPREE_ID) {
       btn.disabled = true; msg.textContent = 'Envoi en cours…';
       fetch('https://formspree.io/f/' + FORMSPREE_ID, {
@@ -1106,7 +1156,7 @@
       return;
     }
     var body = 'Nom : ' + data.nom + '\nEmail : ' + data.email + '\nTéléphone : ' + data.tel +
-      '\nProfil : ' + data.profil + '\nBesoin : ' + data.besoin + '\n\nMessage :\n' + data.message;
+      '\nProfil : ' + data.profil + '\nBesoin : ' + data.besoin + '\n' + (volTxt ? '\n--- Activité ---\n' + volTxt : '') + '\nMessage :\n' + data.message;
     msg.textContent = 'Votre messagerie s\'ouvre avec le message prêt à partir. Merci !';
     window.location.href = 'mailto:' + CONTACT_USER + '@' + CONTACT_HOST + '?subject=' + encodeURIComponent(data._subject) + '&body=' + encodeURIComponent(body);
   });
