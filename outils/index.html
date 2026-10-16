@@ -487,10 +487,10 @@ function idTag(){const t=$('#tag');if(!t)return;t.textContent=cur?[V('contact')&
 function openClient(id){cur=DB.clients.find(c=>c.id===id);if(!cur)return;S=ensure(cur.S);cur.docs=cur.docs||{};cur.journal=cur.journal||[];cur.fact=cur.fact||[];cur.versions=cur.versions||[];go(S.step||1)}
 function newClient(){const c={id:'c'+Date.now().toString(36),created:today(),upd:today(),name:'Nouveau client',S:mk(),docs:{},journal:[],fact:[],versions:[],closed:false};c.S.dv.no=nextNo();DB.clients.unshift(c);persist();openClient(c.id)}
 let PG='dash';
-const PGT={agenda:'Mon agenda',temps:'Mes heures',modeles:'Mes messages types',dash:'Mon tableau de bord',clients:'Mes clients',fact:'Facturation',docs:'Documents à signer',stats:'Statistiques',save:'Sauvegarde'};
-const NIC={agenda:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',temps:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',modeles:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',dash:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',clients:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.2a3 3 0 010 5.6M18 14.4c1.8.8 3 2.7 3 5.6"/>',fact:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',docs:'<path d="M7 3h8l4 4v14H7z"/><path d="M10 14l2 2 4-4"/>',stats:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',save:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/>'};
+const PGT={agenda:'Mon agenda',temps:'Mes heures',estim:'Estimateur de forfait',modeles:'Mes messages types',dash:'Mon tableau de bord',clients:'Mes clients',fact:'Facturation',docs:'Documents à signer',stats:'Statistiques',save:'Sauvegarde'};
+const NIC={estim:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/>',agenda:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',temps:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',modeles:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',dash:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',clients:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.2a3 3 0 010 5.6M18 14.4c1.8.8 3 2.7 3 5.6"/>',fact:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',docs:'<path d="M7 3h8l4 4v14H7z"/><path d="M10 14l2 2 4-4"/>',stats:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',save:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/>'};
 function mnav(){const al=alerts().length,unp=allFact().filter(f=>!f.paid).length,late=0;const m_=thisM(),surv=DB.clients.filter(c=>!c.closed&&stat(c)[0]==='Client'&&quota(c)&&hrsOf(c,m_)>=quota(c)*.8).length,rt=events().filter(x=>x.k==='rdv'&&x.d===today()).length;const bd={dash:al||'',clients:DB.clients.length||'',agenda:rt||'',temps:surv||'',fact:unp||''};const act=cur?'clients':PG;
- const L=[['dash','Tableau de bord'],['clients','Mes clients'],['agenda','Agenda'],['temps','Temps passé'],['fact','Facturation'],['docs','Documents'],['modeles','Messages types'],['stats','Statistiques'],['save','Sauvegarde']];
+ const L=[['dash','Tableau de bord'],['clients','Mes clients'],['agenda','Agenda'],['temps','Temps passé'],['estim','Estimateur'],['fact','Facturation'],['docs','Documents'],['modeles','Messages types'],['stats','Statistiques'],['save','Sauvegarde']];
  $('#mnav').innerHTML=L.map(x=>`<button class="nv ${act===x[0]?'on':''}" data-pg="${x[0]}"><span class="ic"><svg viewBox="0 0 24 24">${NIC[x[0]]}</svg></span><span class="t">${x[1]}</span>${bd[x[0]]?`<span class="nb">${bd[x[0]]}</span>`:''}</button>`).join('')}
 function sideFoot(){const el=$('#sfoot');if(!el)return;el.innerHTML=SES?`<i></i>${SYNC==='err'?'Hors ligne':SYNC==='saving'?'Enregistrement…':'Sauvegardé en ligne'}`:`<i class="off"></i>Non connectée`}
 function setPg(p){cur=null;S=mk();PG=p;go(0)}
@@ -1125,7 +1125,7 @@ function extraStats(){const m=thisM(),byO={},byH={};DB.clients.forEach(c=>{const
 /* pages hors tableau de bord */
 function pgExt(out){
  if(PG==='dash'){out=out.replace('<div class="g2c">',plafondCard()+'<div class="g2c">')+extraDash()}
- else if(PG==='agenda')out=pgAgenda();else if(PG==='temps')out=pgTemps();else if(PG==='modeles')out=pgModeles();
+ else if(PG==='agenda')out=pgAgenda();else if(PG==='temps')out=pgTemps();else if(PG==='estim')out=pgEst();else if(PG==='modeles')out=pgModeles();
  else if(PG==='clients'){const tg=`<div class="fbar"><div class="chips" style="margin:0"><button data-x="hv|list" class="${HV==='list'?'on':''}">Liste</button><button data-x="hv|pipe" class="${HV==='pipe'?'on':''}">Pipeline</button></div></div>`;
   if(HV==='pipe')out=out.slice(0,out.indexOf('<div class="fbar">'))+tg+`<div class="cbar"><div class="bk-btns" style="margin-left:auto"><button class="btn" id="newc">+ Nouveau client</button></div></div>`+pipeline();else out=out.replace('<div class="fbar">',tg+'<div class="fbar">')}
  else if(PG==='stats')out+=extraStats();
@@ -1157,6 +1157,61 @@ document.addEventListener('change',e=>{const t=e.target;
  if(t.dataset.xtc!=null){TPC=t.value;TPI='';r0()}
  if(t.dataset.xti!=null){TPI=t.value;r0()}});
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset.xtraw!=null){DB.tpl[TPK]=t.value;persist()}});
+/* ===== Estimateur de forfait ===== */
+const EQ=[
+ ['mails','Emails reçus par semaine',['Moins de 20','20 à 50','50 à 100','100 à 200','Plus de 200'],4.33],
+ ['rdv','Rendez-vous à gérer par semaine',['0 à 3','4 à 10','Plus de 10'],4.33],
+ ['courrier','Courriers papier par mois',['0 à 5','6 à 20','Plus de 20'],1],
+ ['fact','Factures émises par mois',['0 à 10','11 à 30','31 à 60','Plus de 60'],1],
+ ['relances','Factures à relancer par mois',['0 à 3','4 à 10','11 à 25','Plus de 25'],1],
+ ['devis','Devis envoyés par mois',['0 à 5','6 à 15','16 à 30','Plus de 30'],1]];
+const EM=[['mail','Emails et agenda'],['cour','Courriers et classement'],['rel','Relances et suivi des devis'],['mand','Factures sur mandat'],['compta','Pièces au comptable'],['outil','Un outil sur mesure']];
+const EP0={mailpart:40,mail:3,rdv:8,cour:6,rel:12,dev:6,pay:2,mand:12,cbase:45,cfact:1,pilot:60,marge:15};
+const EPL={mailpart:['Part des emails que je traite','les autres sont des notifications ou newsletters','%'],mail:['Un email','tri, réponse, suivi','min'],rdv:['Un rendez-vous','prise, déplacement, rappel','min'],cour:['Un courrier papier','scan, classement, réponse','min'],rel:['Une relance de facture','message, suivi, historique','min'],dev:['Le suivi d\'un devis','relance si non signé','min'],pay:['Le suivi du paiement d\'une facture','vérifier le règlement','min'],mand:['Une facture préparée sur mandat','préparation et envoi','min'],cbase:['Transmission au comptable','base fixe par mois','min'],cfact:['… par facture en plus','classement de la pièce','min'],pilot:['Pilotage et compte rendu','suivi du client, point mensuel','min'],marge:['Marge d\'imprévus','ajoutée au total','%']};
+function estS(){DB.est=DB.est||{};const e=DB.est;e.in=e.in||{};e.mods=e.mods||{mail:1,cour:1};e.p=Object.assign({},EP0,e.p||{});e.ferm=e.ferm||0;e.nom=e.nom||'';return e}
+function estRange(lbl){let m;if(m=lbl.match(/^Moins de (\d+)/))return[0,+m[1]];if(m=lbl.match(/^Plus de (\d+)/))return[+m[1],+m[1]*1.5];if(m=lbl.match(/^(\d+) à (\d+)/))return[+m[1],+m[2]];return null}
+function estH(e,k){const p=e.p,v={};EQ.forEach(q=>{const r=estRange(e.in[q[0]]||'');v[q[0]]=r?(k==='lo'?r[0]:k==='hi'?r[1]:(r[0]+r[1])/2)*q[3]:0});const M=e.mods,L=[];
+ if(M.mail)L.push(['Emails et agenda',(v.mails*p.mailpart/100*p.mail+v.rdv*p.rdv)/60]);
+ if(M.cour)L.push(['Courriers et classement',v.courrier*p.cour/60]);
+ if(M.rel)L.push(['Relances et suivi des devis',(v.relances*p.rel+v.devis*p.dev+v.fact*p.pay)/60]);
+ if(M.mand)L.push(['Factures sur mandat',v.fact*p.mand/60]);
+ if(M.compta)L.push(['Pièces au comptable',(p.cbase+v.fact*p.cfact)/60]);
+ L.push(['Pilotage et compte rendu mensuel',p.pilot/60]);
+ const brut=L.reduce((a,x)=>a+x[1],0),H=brut*(1+p.marge/100);return{L,brut,H}}
+function estRec(e,H){const M=e.mods,confort=!!(M.rel||M.mand||M.compta||M.outil),hr=Math.ceil(H*2)/2;
+ if(H<=7)return{n:'Sur mesure : moins de 10 h',k:'sur',price:hr*RATE_PRO,hr};
+ if(H>23)return{n:'Sur mesure : plus de 20 h',k:'sur',price:hr*RATE_PRO,hr};
+ if(!confort&&H<=12)return{n:'Sérénité',k:'ser',price:SER,hr:10};
+ if(confort&&H>=17)return{n:'Confort',k:'conf',price:CON,hr:20};
+ return{n:'Sur mesure : entre deux formules',k:'sur',price:hr*RATE_PRO,hr}}
+function estCalc(){const e=estS(),mid=estH(e,'mid'),lo=estH(e,'lo'),hi=estH(e,'hi'),n=EQ.filter(q=>e.in[q[0]]).length,r=estRec(e,mid.H),rl=estRec(e,lo.H),rh=estRec(e,hi.H);return{e,mid,lo,hi,n,r,rl,rh}}
+function estTxt(c){const e=c.e,r=c.r,m=e.ferm||0;return [`Estimation de forfait${e.nom?' — '+e.nom:''}`,'',...c.mid.L.map(x=>`- ${x[0]} : ${hm(x[1])}`),`Total avec marge de ${e.p.marge} % : ${hm(c.mid.H)} par mois (fourchette ${hm(c.lo.H)} à ${hm(c.hi.H)})`,`Formule conseillée : ${r.n}`,`Prix mensuel : ${eur0(r.price)}`,m?`Fermeture ${m} mois : ${eur0(r.price*(12-m))} par an (ou ${eur0(r.price*(12-m)/12)} par mois lissés)`:''].filter((x,i,a)=>x!==''||a[i-1]!=='').join('\n')}
+function pgEst(){const c=estCalc(),e=c.e,r=c.r,m=+e.ferm||0,none=c.n===0;
+ const sel=q=>`<label class="f"><span>${q[1]}</span><select data-xe="${q[0]}"><option value="">Je ne sais pas</option>${q[2].map(o=>`<option${e.in[q[0]]===o?' selected':''}>${o}</option>`).join('')}</select></label>`;
+ const mods=EM.map(x=>`<label style="display:inline-flex;gap:8px;align-items:center;margin:0 18px 8px 0;cursor:pointer"><input type="checkbox" style="accent-color:#6E6B4E" data-xem="${x[0]}" ${e.mods[x[0]]?'checked':''}> ${x[1]}</label>`).join('');
+ const brk=c.mid.L.map(x=>`<div class="al"><div><b>${x[0]}</b></div><span style="margin-left:auto;font-weight:700">${hm(x[1])}</span></div>`).join('');
+ const spread=!none&&c.rl.k!==c.rh.k||(!none&&c.rl.n!==c.rh.n)?`<p class="s" style="margin:10px 0 0">Fourchette large : selon le volume réel, ce serait <b>${c.rl.n}</b> ou <b>${c.rh.n}</b>. Un appel de dix minutes avec le client suffit à trancher.</p>`:'';
+ const prm=Object.keys(EPL).map(k=>`<label class="f" style="margin:0"><span>${EPL[k][0]} <small style="color:var(--mut)">(${EPL[k][1]})</small></span><input type="number" data-xp="${k}" value="${e.p[k]}" min="0" step="${k==='marge'||k==='mailpart'?5:1}" style="max-width:110px"> ${EPL[k][2]}</label>`).join('');
+ return `<div class="lab">Estimer un client</div><h2 class="big">Combien d'heures ?</h2><p class="sub">Reporte ce que le client a rempli dans le formulaire du site. L'estimation te dit quelle formule proposer, ou s'il faut un devis sur mesure. Les durées par tâche sont tes hypothèses : modifie-les en bas de page quand tu auras du recul.</p>
+ <div class="card w" style="margin-bottom:16px"><h3 style="margin-bottom:12px">Ce que dit le client</h3><label class="f"><span>Client ou activité (pour le récapitulatif)</span><input type="text" data-xnom value="${esc(e.nom)}" placeholder="Ex. Électricité Santoni"></label>
+ <div class="g3" style="grid-template-columns:repeat(3,1fr)">${EQ.map(sel).join('')}<label class="f"><span>Fermeture dans l'année</span><select data-xef>${[['0','Aucune'],['1','1 mois'],['2','2 mois'],['3','Plus de 2 mois (3)']].map(o=>`<option value="${o[0]}"${String(m)===o[0]?' selected':''}>${o[1]}</option>`).join('')}</select></label></div>
+ <div style="margin-top:6px"><div class="s" style="margin-bottom:8px">Ce qu'il veut déléguer</div>${mods}</div></div>
+ ${none?`<div class="card w"><p class="s" style="margin:0">Choisis au moins une fourchette ci-dessus pour obtenir une estimation.</p></div>`:`<div class="kpis" style="grid-template-columns:repeat(3,1fr)"><div class="kpi main"><small>Temps estimé par mois</small><b>${hm(c.mid.H)}</b><small>de ${hm(c.lo.H)} à ${hm(c.hi.H)}</small></div><div class="kpi"><small>Formule conseillée</small><b style="font-size:1.4rem;line-height:1.2">${r.n}</b></div><div class="kpi"><small>Prix mensuel</small><b>${eur0(r.price)}</b><small>${r.k==='sur'?'au tarif de '+RATE_PRO+' €/h, arrondi à la demi-heure':'forfait '+r.n+', '+r.hr+' h incluses'}</small></div></div>
+ <div class="g2c"><div class="card w"><h3 style="margin-bottom:12px">Où part le temps (estimation centrale)</h3>${brk}<div class="al"><div><b>Marge d'imprévus ${e.p.marge} %</b></div><span style="margin-left:auto;font-weight:700">${hm(c.mid.H-c.mid.brut)}</span></div>${spread}</div>
+ <div class="card w"><h3 style="margin-bottom:12px">Sur l'année</h3>${m?`<div class="al"><div><b>Suspension du forfait (par défaut)</b><small>${eur0(r.price)} × ${12-m} mois</small></div><span style="margin-left:auto;font-weight:700">${eur0(r.price*(12-m))}</span></div><div class="al"><div><b>Lissage sur 12 mois</b><small>${eur0(r.price*(12-m)/12)} par mois</small></div><span style="margin-left:auto;font-weight:700">${eur0(r.price*(12-m))}</span></div>`:`<div class="al"><div><b>12 mois d'activité</b><small>${eur0(r.price)} × 12</small></div><span style="margin-left:auto;font-weight:700">${eur0(r.price*12)}</span></div>`}<p class="s" style="margin:10px 0 0">Revenu par heure estimée : ${eur0(r.price/c.mid.H)}. ${r.price/c.mid.H<RATE_PRO*.9?'En dessous de ton tarif horaire : revois la formule ou le périmètre.':''}</p>
+ <div class="fbar" style="margin:12px 0 0"><button class="btn" data-x2="estcopy">Copier le récapitulatif pour le devis</button></div></div></div>`}
+ <details id="estd" ${window.EOPEN?'open':''} class="card w" style="margin-top:16px"><summary style="cursor:pointer;font-weight:700">Mes hypothèses de temps par tâche</summary><p class="s" style="margin:8px 0 12px">Valeurs de départ à ajuster d'après tes heures réelles (page « Temps passé »). Ce ne sont pas des statistiques de marché.</p><div class="g3" style="grid-template-columns:repeat(2,1fr);gap:10px">${prm}</div><div class="fbar" style="margin:12px 0 0"><button class="btn ghost" data-x2="estreset">Remettre les valeurs de départ</button></div></details>`}
+document.addEventListener('change',e=>{const t=e.target;if(PG!=='estim')return;const S_=estS();
+ if(t.dataset.xe){S_.in[t.dataset.xe]=t.value;persist();r0()}
+ else if(t.dataset.xem){S_.mods[t.dataset.xem]=t.checked?1:0;persist();r0()}
+ else if(t.dataset.xef!=null){S_.ferm=+t.value;persist();r0()}
+ else if(t.dataset.xp){S_.p[t.dataset.xp]=Math.max(0,+t.value||0);persist();r0()}
+ else if(t.dataset.xnom!=null){S_.nom=t.value;persist()}});
+document.addEventListener('toggle',e=>{if(e.target.id==='estd')window.EOPEN=e.target.open},true);
+document.addEventListener('click',e=>{const t=e.target.closest('[data-x2]');if(!t)return;
+ if(t.dataset.x2==='estcopy'){const x=estTxt(estCalc());if(navigator.clipboard)navigator.clipboard.writeText(x).then(()=>toast('Récapitulatif copié'),()=>toast('Copie impossible'));else toast('Copie impossible')}
+ if(t.dataset.x2==='estreset'){estS().p=Object.assign({},EP0);persist();r0();toast('Valeurs de départ rétablies')}});
+
 
 /* recherche globale */
 function gsearch(v){const q=v.trim().toLowerCase(),g=$('#gres');if(!q){g.classList.remove('on');return}
