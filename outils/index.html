@@ -386,9 +386,13 @@ const MODS=[
  {id:'compta',ic:'🗂',t:'Pièces à transmettre au comptable',d:'Ce qui est classé, envoyé, manquant (sans comptabilité)',o:['Liste des pièces du mois','Statut : reçue / classée / envoyée','Pièces manquantes à réclamer','Date du dernier envoi au comptable'],on:[0,1,2,3]},
  {id:'chantiers',ic:'⌂',t:'Chantiers (artisans, bâtiment)',d:'Un suivi par chantier',o:['Adresse du chantier','Avancement','Acomptes demandés / reçus','Matériel à commander','Photos'],on:[0,1,2]},
  {id:'rdv',ic:'◷',t:'Rendez-vous et dossiers (professions libérales)',d:'Sans aucune donnée de santé ni donnée sensible',o:['Prochains rendez-vous','Honoraires facturés','Dossier ouvert / clos','Documents à fournir'],on:[0,1,2]},
+ {id:'agenda',ic:'◷',t:'Agenda partagé',d:'Rendez-vous, chantiers et rappels de la semaine',def:0,o:['Vue semaine','Rappel automatique au client la veille','Page de prise de rendez-vous (lien à partager)','Export vers son agenda (Google, Apple, Outlook)'],on:[0,1]},
+ {id:'encaiss',ic:'▥',t:'Encaissements',d:'Qui doit quoi, depuis quand, et ce qui arrive (sans comptabilité)',def:0,o:['Retards classés par ancienneté','Délai moyen de paiement','Attendu sous 30 jours','Encaissé et reste à encaisser par client'],on:[0,1,2,3]},
+ {id:'avis',ic:'★',t:'Avis clients',d:'Demander un avis au bon moment et suivre sa réputation',def:0,o:['Demande envoyée à la fin du chantier ou de la prestation','Lien direct vers sa fiche d\'avis en ligne','Note moyenne et liste des avis'],on:[0,1,2]},
+ {id:'tarifs',ic:'⌗',t:'Catalogue de tarifs',d:'Ses prestations et ses prix, repris dans les devis',def:0,o:['Prestations, unités et prix','Ajout rapide dans un devis','Modification en un clic'],on:[0,1,2]},
  {id:'echeances',ic:'⏰',t:'Échéances administratives',d:'Assurances, renouvellements, déclarations à ne pas oublier',o:['Date et rappel','Responsable (client ou Sabrina)','Récurrence'],on:[0,1]}
 ];
-const QUI=['Saisir les devis envoyés','Saisir les factures émises','Préparer les factures sur mandat','Marquer une facture comme réglée','Relancer les factures impayées','Contacter les clients au nom du client','Suivre les devis en attente','Classer et archiver les pièces','Transmettre les pièces au comptable','Gérer emails et agenda'];
+const QUI=['Saisir les devis envoyés','Saisir les factures émises','Préparer les factures sur mandat','Marquer une facture comme réglée','Relancer les factures impayées','Contacter les clients au nom du client','Suivre les devis en attente','Classer et archiver les pièces','Transmettre les pièces au comptable','Gérer emails et agenda','Mettre à jour le statut des factures dans son logiciel (saisie, envoi, règlement)'];
 const QOPT=['À définir','Le client','Sabrina (Respirà)','Les deux','Pas du tout'];
 const SECU=['Coordonnées bancaires','Données de santé','Mots de passe ou codes d\'accès','Pièces d\'identité'];
 const F={ // champs
@@ -413,7 +417,7 @@ const F={ // champs
   ['besoin','Qu\'est-ce qui lui fait perdre le plus de temps aujourd\'hui ?','textarea'],
   ['tempsPerdu','Temps passé chaque semaine sur l\'administratif','select',['À préciser','Moins de 2 h','2 à 5 h','5 à 10 h','Plus de 10 h']],
   ['actuel','Comment suit-il ses clients et ses factures aujourd\'hui ?','textarea'],
-  ['logiciel','Logiciel de facturation ou outil utilisé','text'],['coutActuel','Coût mensuel de ses outils actuels','text'],
+  ['logiciel','Logiciel de facturation ou outil utilisé','text'],['modeFact','Où seront faites ses factures ?','select',['À préciser','Dans l\'outil partagé','Dans son logiciel actuel, avec un accès à mon nom','Dans son logiciel actuel, il m\'envoie un export','Il facture seul, je ne m\'en occupe pas']],['coutActuel','Coût mensuel de ses outils actuels','text'],
   ['papier','Papier ou numérique ?','select',['À préciser','Surtout numérique','Un mélange des deux','Surtout papier']],
   ['comptable','Comptable','select',['À préciser','Cabinet d\'expertise comptable','Expert-comptable en ligne','Il fait seul','Pas encore']],['comptableNom','Nom du comptable ou du cabinet','text'],
   ['attentes','Ce qui doit être changé dans 3 mois pour qu\'il soit satisfait','textarea'],
@@ -566,7 +570,7 @@ const T=(id,name,price,txt)=>`<div class="tp ${S.tool===id?'on':''}" data-tool="
  <p style="color:var(--mut);font-size:.88rem;margin-top:14px">Pas d'abonnement. Maintenance et nouvelles fonctionnalités sur devis (${RATE_PRO} €/h). Le client reste propriétaire de ses données ; accord de sous-traitance RGPD signé avant la mise en service ; ni coordonnées bancaires ni données de santé dans l'outil.</p>${card3('⌂','Qui utilisera l\'outil ?','Les utilisateurs sont les personnes qui se connectent avec leur adresse email. Un salarié qui n\'ouvre jamais l\'outil ne compte pas.','outil')}${limBox()}${foot(4)}`}
 
 /* ------------ cahier des charges ------------ */
-function modOn(m){return S.mods[m.id]!=null?S.mods[m.id]:true}
+function modOn(m){return S.mods[m.id]!=null?S.mods[m.id]:m.def!==0}
 function optOn(m,i){const k=m.id+'.'+i;return S.opts[k]!=null?S.opts[k]:m.on.includes(i)}
 function showRecap(){const V2=(cur.versions||[]).map((v,i)=>Object.assign({i},v)).filter(v=>(v.kind||'Cahier des charges')==='Cahier des charges');$('#recap').innerHTML=`<div class="nav" style="justify-content:flex-start;margin:0 0 16px"><button class="btn ghost" id="cdcback">← Modifier</button><button class="btn" id="cdcprint">Imprimer / enregistrer en PDF</button><button class="btn ghost" id="savev">Enregistrer cette version dans la fiche</button><button class="btn ghost" id="cdccopy">Copier le texte pour Claude</button></div>${V2.length?`<h3 style="font-size:1.3rem;margin:0 0 8px">Versions enregistrées</h3>${V2.map(v=>`<div class="vers"><span>Version du ${fd(v.d)} · devis ${esc(v.no)}</span><button class="btn ghost" style="padding:6px 14px;font-size:.78rem" data-vv="${v.i}">Imprimer / PDF</button><button class="x" data-vx="${v.i}" title="Supprimer">×</button></div>`).join('')}`:''}<div class="sheetbox" style="margin-top:14px"><div id="csheet" style="transform-origin:top center">${docCahier()}</div></div>`;$('#recap').style.display='block';$('#cdcForm').style.display='none';$('#gen').style.display='none';fitC();window.scrollTo({top:$('main').offsetTop,behavior:'smooth'})}
 function r5(){
@@ -607,7 +611,7 @@ function buildRecap(){
  sec('Données, accès et sortie');const sc=SECU.filter((x,i)=>S.secu[i]!=null?S.secu[i]:true);L.push('- Interdit dans l\'outil (confirmé) : '+sc.join(', '));
  hp.push('<h2>Données, accès et sortie</h2><p>Interdit dans l\'outil : '+sc.map(x=>`<span class="tagc">${esc(x)}</span>`).join('')+'</p><table>'+F.secu.map(f=>{const v=S.v[f[0]]||f[3][0];L.push('- '+f[1]+' : '+v);return `<tr><td>${esc(f[1])}</td><td>${esc(v)}</td></tr>`}).join('')+'</table>');
  addF('evol','Évolutions et budget');
- L.push('');L.push('Contraintes de réalisation : un seul code pour tous les clients, personnalisé par logo, couleurs et rubriques ; base en ligne hébergée en Europe, un espace isolé par client ; aucun accès bancaire ; pas de comptabilité ; messagerie partagée datée avec auteur ; le client peut cocher « facture réglée » et ajouter des notes.');
+ L.push('');L.push('Contraintes de réalisation : un seul code pour tous les clients, personnalisé par logo, couleurs et rubriques ; base en ligne hébergée en Europe, un espace isolé par client ; aucun accès bancaire ; pas de comptabilité ; si les factures restent dans le logiciel du client : accès séparé à mon nom ou export (pas de mot de passe partagé), l\'outil ne fait que suivre l\'état des factures ; messagerie partagée datée avec auteur ; le client peut cocher « facture réglée » et ajouter des notes.');
  return{text:L.join('\n'),html:'<div class="doc2">'+hp.join('')+'</div>'}}
 
 /* ------------ devis ------------ */
