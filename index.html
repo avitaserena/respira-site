@@ -237,16 +237,15 @@
   .price-card li::before { content:""; position:absolute; left:0; top:.55em; width:10px; height:2px; background:currentColor; border-radius:2px; transition:width .3s var(--ease); }
   .price-card:hover li::before { width:14px; }
   .price-card:hover li { transform:translateX(4px); }
-  .bespoke { margin-top:32px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:24px 30px; border-radius:18px; background:#fff; }
-  .bespoke b { font-family:'Playfair Display',Georgia,serif; font-size:1.25rem; display:block; margin-bottom:4px; }
-  .bespoke span { color:var(--ink); font-size:.95rem; }
-  .bespoke a { background:var(--primary); color:#fff; padding:11px 22px; border-radius:999px; font-weight:600; font-size:.9rem; text-decoration:none; white-space:nowrap; }
-  .bespoke a:hover { background:var(--ink); }
+  .bespoke { margin-top:32px; display:grid; grid-template-columns:1fr 1fr; gap:28px; padding:26px 30px; border-radius:18px; background:#fff; }
+  .bespoke b { font-family:'Playfair Display',Georgia,serif; font-size:1.2rem; display:block; margin-bottom:6px; line-height:1.25; }
+  .bespoke span { color:var(--ink); font-size:.95rem; display:block; }
   .vol { margin:6px 0 22px; padding:20px 20px 4px; border-radius:16px; background:rgba(255,255,255,.55); }
   .vol[hidden] { display:none; }
   .vol h3 { font-size:1.15rem; margin-bottom:4px; color:var(--ink); }
   .vol p { margin:0 0 16px; font-size:.85rem; color:var(--muted); }
   .vol .field select { background:#fff; }
+  @media (max-width:900px){ .bespoke{ grid-template-columns:1fr; gap:18px; } }
   .fine-print { margin-top:28px; font-style:italic; color:var(--muted); font-size:0.9rem; }
 
   /* ---- comparatif ---- */
@@ -668,8 +667,8 @@
       </div>
     </div>
     <div class="bespoke reveal">
-      <div><b>Moins de 10&nbsp;h ou plus de 20&nbsp;h par mois&nbsp;?</b><span>Un forfait sur mesure, chiffré d'après votre activité : volume d'emails, de factures, de relances. Devis gratuit sous 24&nbsp;h.</span></div>
-      <a href="#contact">Demander un devis sur mesure</a>
+      <div><b>Moins de 10&nbsp;h ou plus de 20&nbsp;h par mois&nbsp;?</b><span>Je m'adapte : un forfait sur mesure, chiffré d'après votre activité. Devis gratuit sous 24&nbsp;h.</span></div>
+      <div><b>Activité à l'arrêt un ou deux mois&nbsp;?</b><span>Votre forfait est suspendu et non facturé les mois de fermeture, jusqu'à 2 mois par an, avec un préavis de 15 jours.</span></div>
     </div>
     <p class="fine-print">Forfaits donnés à titre indicatif : les tarifs sont adaptables selon vos besoins · Sans engagement · Devis gratuit sous 24h</p>
   </div>
@@ -930,32 +929,36 @@
             <option>Autre</option>
           </select>
         </div>
-        <div class="vol" id="volBlock" hidden>
+        <div class="vol" id="volPro" hidden>
           <h3>Votre activité en quelques chiffres</h3>
-          <p>Facultatif. Des ordres de grandeur suffisent : ils me permettent de vous proposer un devis juste, dès ma première réponse.</p>
-          <div class="field"><label for="activite">Votre activité</label><input type="text" id="activite" name="activite" placeholder="Ex. : électricien, sophrologue, cabinet d'architecte…" /></div>
-          <div class="field"><label for="v_mails">Emails reçus par semaine</label><select id="v_mails" name="v_mails"><option value="">Je ne sais pas</option><option>Moins de 20</option><option>20 à 50</option><option>50 à 100</option><option>100 à 200</option><option>Plus de 200</option></select></div>
-          <div class="field"><label for="v_rdv">Rendez-vous à gérer par semaine</label><select id="v_rdv" name="v_rdv"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>Plus de 10</option></select></div>
-          <div class="field"><label for="v_courrier">Courriers papier par mois</label><select id="v_courrier" name="v_courrier"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 20</option><option>Plus de 20</option></select></div>
-          <div class="field"><label for="v_fact">Factures émises par mois</label><select id="v_fact" name="v_fact"><option value="">Je ne sais pas</option><option>0 à 10</option><option>11 à 30</option><option>31 à 60</option><option>Plus de 60</option></select></div>
-          <div class="field"><label for="v_relances">Factures à relancer par mois</label><select id="v_relances" name="v_relances"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>11 à 25</option><option>Plus de 25</option></select></div>
-          <div class="field"><label for="v_devis">Devis envoyés par mois</label><select id="v_devis" name="v_devis"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 15</option><option>16 à 30</option><option>Plus de 30</option></select></div>
-          <div class="field"><label for="v_ferm">Fermeture dans l'année</label><select id="v_ferm" name="v_ferm"><option value="">Je ne sais pas</option><option>Aucune</option><option>1 mois</option><option>2 mois</option><option>Plus de 2 mois</option></select></div>
-          <div class="field"><label>Ce que vous aimeriez déléguer</label>
-            <div class="radio-row">
-              <label><input type="checkbox" name="deleg" value="Emails et agenda" /><span>Emails &amp; agenda</span></label>
-              <label><input type="checkbox" name="deleg" value="Courriers et classement" /><span>Courriers &amp; classement</span></label>
-              <label><input type="checkbox" name="deleg" value="Relances et suivi des devis" /><span>Relances &amp; suivi des devis</span></label>
-              <label><input type="checkbox" name="deleg" value="Factures sur mandat" /><span>Factures sur mandat</span></label>
-              <label><input type="checkbox" name="deleg" value="Transmission des pièces au comptable" /><span>Pièces au comptable</span></label>
-              <label><input type="checkbox" name="deleg" value="Outil sur mesure" /><span>Un outil sur mesure</span></label>
-            </div>
-          </div>
-          <div class="field"><label for="logiciel">Logiciel de facturation ou de comptabilité utilisé</label><input type="text" id="logiciel" name="logiciel" placeholder="Ex. : Indy, Henrici, Excel, aucun…" /></div>
+          <p>Tout est facultatif, « Je ne sais pas » est une réponse. Des ordres de grandeur me permettent de vous proposer un devis juste dès ma première réponse.</p>
+          <div class="field"><label for="p_activite">Votre activité</label><input type="text" id="p_activite" name="p_activite" placeholder="Ex. : électricien, sophrologue, cabinet d'architecte…" /></div>
+          <div class="field"><label for="p_situation">Où en est votre activité ?</label><select id="p_situation" name="p_situation"><option value="">Je ne sais pas</option><option>Déjà en activité</option><option>En cours de création</option></select></div>
+          <div class="field"><label for="p_salaries">Nombre de salariés</label><select id="p_salaries" name="p_salaries"><option value="">Je ne sais pas</option><option>Aucun, je travaille seul(e)</option><option>1 à 2</option><option>3 à 5</option><option>6 à 10</option><option>Plus de 10</option></select></div>
+          <div class="field"><label for="p_mails">Emails reçus par semaine</label><select id="p_mails" name="p_mails"><option value="">Je ne sais pas</option><option>Moins de 20</option><option>20 à 50</option><option>50 à 100</option><option>100 à 200</option><option>Plus de 200</option></select></div>
+          <div class="field"><label for="p_rdv">Rendez-vous à gérer par semaine</label><select id="p_rdv" name="p_rdv"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>Plus de 10</option></select></div>
+          <div class="field"><label for="p_courrier">Courriers papier par mois</label><select id="p_courrier" name="p_courrier"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 20</option><option>Plus de 20</option></select></div>
+          <div class="field"><label for="p_fact">Factures émises par mois</label><select id="p_fact" name="p_fact"><option value="">Je ne sais pas</option><option>0 à 10</option><option>11 à 30</option><option>31 à 60</option><option>Plus de 60</option></select></div>
+          <div class="field"><label for="p_relances">Factures à relancer par mois</label><select id="p_relances" name="p_relances"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>11 à 25</option><option>Plus de 25</option></select></div>
+          <div class="field"><label for="p_devis">Devis envoyés par mois</label><select id="p_devis" name="p_devis"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 15</option><option>16 à 30</option><option>Plus de 30</option></select></div>
+          <div class="field"><label for="p_ferm">Fermeture dans l'année</label><select id="p_ferm" name="p_ferm"><option value="">Je ne sais pas</option><option>Aucune</option><option>1 mois</option><option>2 mois</option><option>Plus de 2 mois</option></select></div>
+          <div class="field"><label>Ce que vous aimeriez déléguer</label><div class="radio-row"><label><input type="checkbox" name="p_deleg" value="Emails et agenda" /><span>Emails et agenda</span></label><label><input type="checkbox" name="p_deleg" value="Courriers et classement" /><span>Courriers et classement</span></label><label><input type="checkbox" name="p_deleg" value="Relances et suivi des devis" /><span>Relances et suivi des devis</span></label><label><input type="checkbox" name="p_deleg" value="Factures sur mandat" /><span>Factures sur mandat</span></label><label><input type="checkbox" name="p_deleg" value="Pièces au comptable" /><span>Pièces au comptable</span></label><label><input type="checkbox" name="p_deleg" value="Un outil sur mesure" /><span>Un outil sur mesure</span></label></div></div>
+          <div class="field"><label for="p_logiciel">Logiciel de facturation ou de comptabilité utilisé</label><input type="text" id="p_logiciel" name="p_logiciel" placeholder="Ex. : Indy, Henrici, Excel, aucun…" /></div>
+          <div class="field"><label>Une préférence de formule ?</label><div class="radio-row"><label><input type="radio" name="p_pref" value="Sérénité (10 h)" /><span>Sérénité (10 h)</span></label><label><input type="radio" name="p_pref" value="Confort (20 h)" /><span>Confort (20 h)</span></label><label><input type="radio" name="p_pref" value="À l'heure" /><span>À l'heure</span></label><label><input type="radio" name="p_pref" value="Je ne sais pas" /><span>Je ne sais pas</span></label></div></div>
+        </div>
+        <div class="vol" id="volPart" hidden>
+          <h3>Votre besoin en quelques précisions</h3>
+          <p>Tout est facultatif, « Je ne sais pas » est une réponse. Cela me permet de vous indiquer un ordre de prix dès ma première réponse.</p>
+          <div class="field"><label>Ce dont vous avez besoin</label><div class="radio-row"><label><input type="checkbox" name="q_nature" value="Démarches administratives" /><span>Démarches administratives</span></label><label><input type="checkbox" name="q_nature" value="Tri et archives" /><span>Tri et archives</span></label><label><input type="checkbox" name="q_nature" value="Courriers" /><span>Courriers</span></label><label><input type="checkbox" name="q_nature" value="Locations saisonnières" /><span>Locations saisonnières</span></label><label><input type="checkbox" name="q_nature" value="Assistanat ponctuel" /><span>Assistanat ponctuel</span></label><label><input type="checkbox" name="q_nature" value="Autre" /><span>Autre</span></label></div></div>
+          <div class="field"><label for="q_volume">Nombre de démarches ou de documents concernés</label><select id="q_volume" name="q_volume"><option value="">Je ne sais pas</option><option>1 à 3</option><option>4 à 10</option><option>Plus de 10</option></select></div>
+          <div class="field"><label for="q_logements">Si location saisonnière : nombre de logements</label><select id="q_logements" name="q_logements"><option value="">Je ne sais pas</option><option>1</option><option>2</option><option>3 ou plus</option></select></div>
+          <div class="field"><label for="q_freq">Une fois, ou régulièrement ?</label><select id="q_freq" name="q_freq"><option value="">Je ne sais pas</option><option>Une seule fois</option><option>De temps en temps</option><option>Régulièrement</option></select></div>
+          <div class="field"><label for="q_delai">Dans quel délai ?</label><select id="q_delai" name="q_delai"><option value="">Je ne sais pas</option><option>Urgent (moins de 48 h)</option><option>Sous une semaine</option><option>Sous un mois</option><option>Pas pressé</option></select></div>
+          <div class="field"><label>Une préférence ?</label><div class="radio-row"><label><input type="radio" name="q_pref" value="À l'heure" /><span>À l'heure</span></label><label><input type="radio" name="q_pref" value="Un forfait mensuel" /><span>Un forfait mensuel</span></label><label><input type="radio" name="q_pref" value="Je ne sais pas" /><span>Je ne sais pas</span></label></div></div>
         </div>
         <div class="field">
-          <label for="message">Votre message</label>
-          <textarea id="message" name="message" placeholder="Décrivez en quelques mots ce que vous cherchez à déléguer..." required></textarea>
+          <label for="message">Votre message <small style="color:var(--muted);font-weight:400">(facultatif)</small></label>
+          <textarea id="message" name="message" placeholder="Décrivez en quelques mots ce que vous cherchez à déléguer..."></textarea>
         </div>
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true" />
         <label class="consent"><input type="checkbox" name="consent" required /><span>J'accepte que mes données soient utilisées pour répondre à ma demande, comme indiqué dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</span></label>
@@ -1118,47 +1121,53 @@
     });
   });
 
-  /* ---- formulaire : envoi via Formspree (repli : messagerie) ---- */
-  /* Remplacer FORMSPREE_ID par l'identifiant du formulaire (https://formspree.io/f/XXXXXXXX) */
+  /* ---- formulaire : envoi vers la base de Sabrina (Supabase), puis repli Formspree ou messagerie ---- */
   var FORMSPREE_ID = '';
-  /* bloc « activité » : visible seulement pour un professionnel */
-  (function () {
-    var vb = d.getElementById('volBlock'), radios = d.querySelectorAll('input[name=profil]');
-    function sync() { var pro = d.querySelector('input[name=profil]:checked'); vb.hidden = !(pro && pro.value === 'Professionnel'); }
-    Array.prototype.forEach.call(radios, function (r) { r.addEventListener('change', sync); }); sync();
-  })();
-  d.getElementById('contactForm').addEventListener('submit', function (e) {
+  var SB_URL = 'https://adnxvlkosqowyfqatkum.supabase.co', SB_KEY = 'sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl';
+  var form = d.getElementById('contactForm');
+  function syncBlocks() {
+    var pr = form.querySelector('input[name=profil]:checked');
+    d.getElementById('volPro').hidden = !(pr && pr.value === 'Professionnel');
+    d.getElementById('volPart').hidden = !(pr && pr.value === 'Particulier');
+  }
+  Array.prototype.forEach.call(form.querySelectorAll('input[name=profil]'), function (r) { r.addEventListener('change', syncBlocks); });
+  syncBlocks();
+  function val(n) { var el = form.querySelector('[name=' + n + ']'); return el ? el.value : ''; }
+  function checked(n) { return Array.prototype.map.call(form.querySelectorAll('input[name=' + n + ']:checked'), function (x) { return x.value; }); }
+  function pick(map) { var o = {}; Object.keys(map).forEach(function (k) { var v = map[k]; if (Array.isArray(v) ? v.length : v) o[k] = v; }); return o; }
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     var f = e.target, msg = d.getElementById('formMsg'), btn = f.querySelector('button[type=submit]');
     if (f._gotcha && f._gotcha.value) return;
-    var data = {
-      nom: f.nom.value, email: f.email.value, tel: f.tel.value || '—', profil: f.profil.value,
-      besoin: f.besoin.value, message: f.message.value, consentement: 'oui',
-      _subject: 'Demande via Respirà — ' + f.besoin.value
-    };
-    var volTxt = '';
-    if (f.profil.value === 'Professionnel') {
-      var VOL = [['activite','Activité'],['v_mails','Emails par semaine'],['v_rdv','Rendez-vous par semaine'],['v_courrier','Courriers par mois'],['v_fact','Factures émises par mois'],['v_relances','Factures à relancer par mois'],['v_devis','Devis par mois'],['v_ferm','Fermeture dans l\'année'],['logiciel','Logiciel de facturation']];
-      var deleg = Array.prototype.map.call(f.querySelectorAll('input[name=deleg]:checked'), function (x) { return x.value; }).join(', ');
-      VOL.forEach(function (p) { var el = f.querySelector('[name=' + p[0] + ']'); data[p[1]] = (el && el.value) ? el.value : '—'; volTxt += p[1] + ' : ' + data[p[1]] + '\n'; });
-      data['À déléguer'] = deleg || '—'; volTxt += 'À déléguer : ' + data['À déléguer'] + '\n';
+    var pro = f.profil.value === 'Professionnel';
+    var data = { nom: f.nom.value, email: f.email.value, tel: f.tel.value, profil: f.profil.value, besoin: f.besoin.value, message: f.message.value, consentement: 'oui', source: 'site', date: new Date().toISOString() };
+    data.details = pro ? pick({ activite: val('p_activite'), situation: val('p_situation'), salaries: val('p_salaries'), mails: val('p_mails'), rdv: val('p_rdv'), courrier: val('p_courrier'), fact: val('p_fact'), relances: val('p_relances'), devis: val('p_devis'), ferm: val('p_ferm'), deleg: checked('p_deleg'), logiciel: val('p_logiciel'), pref: checked('p_pref')[0] || '' })
+                      : pick({ nature: checked('q_nature'), volume: val('q_volume'), logements: val('q_logements'), freq: val('q_freq'), delai: val('q_delai'), pref: checked('q_pref')[0] || '' });
+    var lines = Object.keys(data.details).map(function (k) { var v = data.details[k]; return k + ' : ' + (Array.isArray(v) ? v.join(', ') : v); }).join('\n');
+    var body = 'Nom : ' + data.nom + '\nEmail : ' + data.email + '\nTéléphone : ' + (data.tel || '—') + '\nProfil : ' + data.profil + '\nBesoin : ' + data.besoin + (lines ? '\n\n--- Précisions ---\n' + lines : '') + '\n\nMessage :\n' + (data.message || '—');
+    var subject = 'Demande via Respirà — ' + data.besoin;
+    var okMsg = 'Merci, votre demande est bien envoyée. Je vous réponds sous 24 h.';
+    var fail = 'Envoi impossible pour le moment. Écrivez-moi directement à ' + CONTACT_USER + '@' + CONTACT_HOST + '.';
+    function viaMail() {
+      msg.textContent = 'Votre messagerie s\'ouvre avec le message prêt à partir. Merci !';
+      window.location.href = 'mailto:' + CONTACT_USER + '@' + CONTACT_HOST + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     }
-    if (FORMSPREE_ID) {
-      btn.disabled = true; msg.textContent = 'Envoi en cours…';
-      fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-        method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data)
-      }).then(function (r) {
-        if (r.ok) { f.reset(); msg.textContent = 'Merci, votre demande est bien envoyée. Je vous réponds sous 24 h.'; }
-        else { msg.textContent = 'Envoi impossible pour le moment. Écrivez-moi directement à ' + CONTACT_USER + '@' + CONTACT_HOST + '.'; }
-      }).catch(function () {
-        msg.textContent = 'Envoi impossible pour le moment. Écrivez-moi directement à ' + CONTACT_USER + '@' + CONTACT_HOST + '.';
-      }).then(function () { btn.disabled = false; });
-      return;
+    function viaFormspree() {
+      return fetch('https://formspree.io/f/' + FORMSPREE_ID, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nom: data.nom, email: data.email, tel: data.tel || '—', profil: data.profil, besoin: data.besoin, precisions: lines || '—', message: data.message || '—', consentement: 'oui', _subject: subject }) });
     }
-    var body = 'Nom : ' + data.nom + '\nEmail : ' + data.email + '\nTéléphone : ' + data.tel +
-      '\nProfil : ' + data.profil + '\nBesoin : ' + data.besoin + '\n' + (volTxt ? '\n--- Activité ---\n' + volTxt : '') + '\nMessage :\n' + data.message;
-    msg.textContent = 'Votre messagerie s\'ouvre avec le message prêt à partir. Merci !';
-    window.location.href = 'mailto:' + CONTACT_USER + '@' + CONTACT_HOST + '?subject=' + encodeURIComponent(data._subject) + '&body=' + encodeURIComponent(body);
+    btn.disabled = true; msg.textContent = 'Envoi en cours…';
+    fetch(SB_URL + '/rest/v1/leads', { method: 'POST', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ data: data }) })
+      .then(function (r) {
+        if (!r.ok) throw new Error('sb');
+        if (FORMSPREE_ID) viaFormspree().catch(function () {});
+        f.reset(); syncBlocks(); msg.textContent = okMsg;
+      })
+      .catch(function () {
+        if (FORMSPREE_ID) { return viaFormspree().then(function (r) { if (r.ok) { f.reset(); syncBlocks(); msg.textContent = okMsg; } else { msg.textContent = fail; } }).catch(function () { msg.textContent = fail; }); }
+        viaMail();
+      })
+      .then(function () { btn.disabled = false; });
   });
 })();
 </script>
