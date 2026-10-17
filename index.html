@@ -366,6 +366,17 @@
   .totop:hover { background:var(--ink); }
 
   /* ---- révélations ---- */
+  /* ---- outils : cartes ---- */
+  .tool-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:44px; }
+  .tool-card { background:var(--card); border-radius:20px; padding:30px 28px 28px; }
+  .tool-card .tc-ico { width:52px; height:52px; border-radius:50%; background:var(--primary); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .tool-card .tc-ico svg { width:26px; height:26px; fill:none; stroke:#fff; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .tool-card h3 { font-size:1.2rem; line-height:1.25; margin-bottom:8px; }
+  .tool-card p { margin:0; font-size:.95rem; color:var(--ink); opacity:.85; }
+  @media (max-width:980px) { .tool-cards { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:640px) { .tool-cards { grid-template-columns:1fr; } }
+  .fine-lines { margin-top:30px; text-align:center; color:var(--muted); font-size:.88rem; font-style:italic; }
+  .fine-lines p { margin:0 0 6px; }
   /* ---- vidéo de présentation ---- */
   .demo-video { margin:44px auto 8px; max-width:980px; }
   .demo-video .frame { position:relative; border-radius:22px; overflow:hidden; background:var(--primary); box-shadow:0 30px 70px -30px rgba(52,51,31,.55), 0 0 0 1px rgba(52,51,31,.12); aspect-ratio:16/9; }
@@ -539,7 +550,7 @@
     <a class="logo" href="#hero" aria-label="Respirà, retour en haut">Respirà</a>
     <div class="nav-right">
       <nav class="links" id="navLinks" aria-label="Navigation principale">
-        <a href="#professionnels">Professionnels</a>
+        <a href="#professionnels">Formules</a>
         <a href="#outils">Outils sur mesure</a>
         <a href="#pourquoi">Pourquoi Respirà</a>
       </nav>
@@ -630,8 +641,8 @@
 
 <section id="professionnels" style="background:var(--card)">
   <div class="wrap">
-    <div class="section-label reveal">Pour les entreprises</div>
-    <h2 class="big-title reveal">Professionnels</h2>
+    <div class="section-label reveal">Formules et tarifs</div>
+    <h2 class="big-title reveal">À votre rythme.</h2>
     <p class="subtitle reveal">TPE, artisans, indépendants, professions libérales — un appui administratif régulier, une écriture sans faute, et des outils pratiques créés pour votre activité, sans les contraintes d'une embauche.</p>
     <div class="pricing-grid">
       <div class="price-card reveal" style="transition-delay:0s">
@@ -674,8 +685,10 @@
       <div><b>Moins de 10&nbsp;h ou plus de 20&nbsp;h par mois&nbsp;?</b><span>Je m'adapte : un forfait sur mesure, chiffré d'après votre activité. Devis gratuit sous 24&nbsp;h.</span></div>
       <div><b>Activité à l'arrêt un ou deux mois&nbsp;?</b><span>Votre forfait est suspendu et non facturé les mois de fermeture, jusqu'à 2 mois par an, avec un préavis de 15 jours.</span></div>
     </div>
-    <p class="fine-print">Prestations réalisées à distance, au forfait mensuel ou à l'heure. Ne sont pas concernés : la tenue de comptabilité, le conseil juridique et la gestion de la paie.</p>
-    <p class="fine-print" style="margin-top:8px">Forfaits donnés à titre indicatif : les tarifs sont adaptables selon vos besoins · Sans engagement · Devis gratuit sous 24h</p>
+    <div class="fine-lines reveal">
+      <p>Prestations réalisées à distance, au forfait mensuel ou à l'heure · Forfaits donnés à titre indicatif, adaptables selon vos besoins</p>
+      <p>Ne sont pas concernés : la tenue de comptabilité, le conseil juridique et la gestion de la paie · Sans engagement · Devis gratuit sous 24&nbsp;h</p>
+    </div>
   </div>
 </section>
 
@@ -693,82 +706,13 @@
       </div>
       <figcaption>L'outil en 1 minute 25 · exemple avec des données fictives · musique, sans paroles</figcaption>
     </figure>
-    <div class="tool-grid">
-      <ul class="tool-list reveal">
-        <li><b>Tous vos clients au même endroit</b><span>Une fiche par client, retrouvée en tapant simplement son nom.</span></li>
-        <li><b>Devis : où en êtes-vous&nbsp;?</b><span>Créé, envoyé, accepté : vous voyez l'état de chaque devis d'un coup d'œil.</span></li>
-        <li><b>Factures : réglées ou non&nbsp;?</b><span>Repérez en un instant celles qui attendent un paiement, pour relancer à temps.</span></li>
-        <li><b>Tri par type de client</b><span>Clients, partenaires, fournisseurs : vos listes triées comme vous en avez besoin.</span></li>
-        <li><b>Vos tâches du jour</b><span>Ce qu'il y a à faire aujourd'hui, au même endroit, sans rien oublier.</span></li>
-        <li><b>Une messagerie partagée</b><span>Vous écrivez « le client règle le 28 novembre », je note ma relance : chacun voit où on en est.</span></li>
-        <li><b>Un outil qui évolue</b><span>Nouvelles fonctionnalités et maintenance sur devis, sans abonnement mensuel.</span></li>
-      </ul>
-      <div class="car reveal" id="car" aria-roledescription="carrousel" aria-label="Exemples d'écrans d'un outil sur mesure (données fictives)">
-        <div class="car-top"><i></i><i></i><i></i><span id="carTitle">Vos clients</span><em>Exemple · données fictives</em></div>
-        <div class="car-view">
-          <div class="car-track" id="carTrack">
-
-            <section class="slide" data-title="Vos clients">
-              <div class="tm-search"><span>&#128269;</span><input id="carSearch" type="text" placeholder="Rechercher un client…" aria-label="Rechercher un client"></div>
-              <div class="chips" id="carChips"><button class="on" data-f="all">Tous</button><button data-f="pro">Professionnels</button></div>
-              <div class="tm-list" id="carList">
-                <div class="tm-row" data-t="pro"><div><strong>Atelier Lumière</strong><small>Entreprise</small></div><span class="pill ok">Facture réglée</span></div>
-                <div class="tm-row" data-t="pro"><div><strong>Cabinet Dupont</strong><small>Profession libérale</small></div><span class="pill late">À relancer</span></div>
-                <div class="tm-row" data-t="pro"><div><strong>Boulangerie du Port</strong><small>Entreprise</small></div><span class="pill ok">Facture réglée</span></div>
-              </div>
-            </section>
-
-            <section class="slide" data-title="Une fiche par client">
-              <div class="fiche-h"><div class="av">CD</div><div><strong>Cabinet Dupont</strong><small>Profession libérale · client depuis mars</small></div></div>
-              <div class="fgrid">
-                <label>Contact<input value="Dr Anne Dupont" aria-label="Contact"></label>
-                <label>Téléphone<input value="06 12 34 56 78" aria-label="Téléphone"></label>
-                <label class="w2">Email<input value="contact@cabinet-dupont.fr" aria-label="Email"></label>
-                <label class="w2">Notes<textarea aria-label="Notes">Préfère être joint le matin. Facture à envoyer à la comptable.</textarea></label>
-              </div>
-              <div class="fdocs"><div><b>Devis D-014</b><span class="pill ok">Accepté</span></div><div><b>Facture F-031</b><span class="pill late">En retard</span></div></div>
-            </section>
-
-            <section class="slide" data-title="Vos tâches du jour">
-              <div class="task-h"><strong>Aujourd'hui</strong><span id="taskCount">2 faites · 3 à faire</span></div>
-              <ul class="tasks" id="tasks">
-                <li class="done"><button aria-pressed="true"><i></i></button><span>Envoyer le devis à Atelier Lumière</span><em>Fait</em></li>
-                <li class="done"><button aria-pressed="true"><i></i></button><span>Appeler le Cabinet Dupont</span><em>Fait</em></li>
-                <li class="urgent"><button aria-pressed="false"><i></i></button><span>Relancer la facture F-031</span><em class="alert"><b>!</b> En retard · 12/10</em></li>
-                <li><button aria-pressed="false"><i></i></button><span>Préparer les pièces du mois pour le comptable</span><em>Aujourd'hui</em></li>
-                <li><button aria-pressed="false"><i></i></button><span>Mettre à jour le suivi des paiements</span><em>Demain</em></li>
-              </ul>
-              <p class="tip">Cliquez sur un rond pour cocher une tâche.</p>
-            </section>
-
-            <section class="slide" data-title="Devis et factures">
-              <div class="tbl">
-                <div class="th"><span>Document</span><span>Client</span><span>Montant</span><span>État</span></div>
-                <div class="tr"><span>F-034</span><span>Boulangerie du Port</span><span>180 €</span><span class="pill ok">Réglée</span></div>
-                <div class="tr"><span>F-033</span><span>Paul Santoni</span><span>70 €</span><span class="pill wait">En attente</span></div>
-                <div class="tr"><span>F-031</span><span>Cabinet Dupont</span><span>400 €</span><span class="pill late">! En retard</span></div>
-                <div class="tr"><span>D-016</span><span>Marie Leroy</span><span>105 €</span><span class="pill draft">Devis envoyé</span></div>
-                <div class="tr"><span>D-015</span><span>Atelier Lumière</span><span>760 €</span><span class="pill ok">Accepté</span></div>
-              </div>
-              <div class="sum"><div><small>En attente de règlement</small><b>3 factures</b></div><div><small>Montant à recevoir</small><b>1 240 €</b></div></div>
-            </section>
-
-            <section class="slide" data-title="Votre tableau de bord">
-              <div class="kpis">
-                <div class="kpi big"><small>Chiffre d'affaires du mois</small><b>2 480 €</b></div>
-                <div class="kpi"><small>Clients professionnels</small><b>12</b></div>
-                <div class="kpi"><small>Clients actifs</small><b>8</b></div>
-                <div class="kpi warn"><small>Factures en attente</small><b>3</b></div>
-              </div>
-              <div class="bars" aria-label="Chiffre d'affaires des six derniers mois">
-                <div><i style="height:38%"></i><span>mai</span></div><div><i style="height:46%"></i><span>juin</span></div><div><i style="height:52%"></i><span>juil.</span></div><div><i style="height:44%"></i><span>août</span></div><div><i style="height:68%"></i><span>sept.</span></div><div><i class="cur" style="height:90%"></i><span>oct.</span></div>
-              </div>
-            </section>
-
-          </div>
-        </div>
-        <div class="car-nav"><button id="carPrev" aria-label="Écran précédent">&#8592;</button><div class="dots" id="carDots"></div><button id="carNext" aria-label="Écran suivant">&#8594;</button></div>
-      </div>
+    <div class="tool-cards">
+      <div class="tool-card reveal" style="transition-delay:0.0s"><div class="tc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.4c1.9.8 3 2.6 3 5.6"/></svg></div><h3>Tous vos clients au même endroit</h3><p>Une fiche par client, avec ses devis, ses factures et son historique. Retrouvée en tapant simplement son nom.</p></div>
+      <div class="tool-card reveal" style="transition-delay:0.1s"><div class="tc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></div><h3>Devis : où en êtes-vous&nbsp;?</h3><p>Créé, envoyé, accepté : vous voyez l'état de chaque devis d'un coup d'œil.</p></div>
+      <div class="tool-card reveal" style="transition-delay:0.2s"><div class="tc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></div><h3>Factures : réglées ou non&nbsp;?</h3><p>Repérez en un instant celles qui attendent un paiement, et je relance à temps.</p></div>
+      <div class="tool-card reveal" style="transition-delay:0.0s"><div class="tc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg></div><h3>Vos tâches du jour</h3><p>Ce qu'il y a à faire aujourd'hui, au même endroit, sans rien oublier.</p></div>
+      <div class="tool-card reveal" style="transition-delay:0.1s"><div class="tc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></div><h3>Une messagerie partagée</h3><p>Vous écrivez « le client règle le 28 novembre », je note ma relance : chacun voit où on en est.</p></div>
+      <div class="tool-card reveal" style="transition-delay:0.2s"><div class="tc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="3.2"/></svg></div><h3>Un outil qui évolue</h3><p>Nouvelles fonctionnalités et maintenance sur devis, sans abonnement mensuel.</p></div>
     </div>
     <p class="fine-print">Un outil simple, que vous gardez et que vous pouvez faire évoluer. Tarif selon le besoin, après un premier échange gratuit.</p>
   </div>
@@ -869,15 +813,15 @@
       <form id="contactForm" class="reveal" style="transition-delay:.15s">
         <div class="field">
           <label for="nom">Nom &amp; prénom</label>
-          <input type="text" id="nom" name="nom" required />
+          <input type="text" id="nom" name="nom" required autocomplete="name" />
         </div>
         <div class="field">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" required autocomplete="email" />
         </div>
         <div class="field">
           <label for="tel">Téléphone (optionnel)</label>
-          <input type="tel" id="tel" name="tel" />
+          <input type="tel" id="tel" name="tel" autocomplete="tel" />
         </div>
         <input type="hidden" name="profil" value="Professionnel" />
         <div class="field">
@@ -892,33 +836,12 @@
             <option>Autre</option>
           </select>
         </div>
-        <div class="vol" id="volPro">
-          <h3>Votre activité en quelques chiffres</h3>
-          <p>Tout est facultatif, « Je ne sais pas » est une réponse. Des ordres de grandeur me permettent de vous proposer un devis juste dès ma première réponse.</p>
-          <div class="field"><label for="p_activite">Votre activité</label><input type="text" id="p_activite" name="p_activite" placeholder="Ex. : électricien, sophrologue, cabinet d'architecte…" /></div>
-          <div class="field"><label for="p_situation">Où en est votre activité ?</label><select id="p_situation" name="p_situation"><option value="">Je ne sais pas</option><option>Déjà en activité</option><option>En cours de création</option></select></div>
-          <div class="field"><label for="p_salaries">Nombre de salariés</label><select id="p_salaries" name="p_salaries"><option value="">Je ne sais pas</option><option>Aucun, je travaille seul(e)</option><option>1 à 2</option><option>3 à 5</option><option>6 à 10</option><option>Plus de 10</option></select></div>
-          <div class="field"><label for="p_mails">Emails reçus par semaine</label><select id="p_mails" name="p_mails"><option value="">Je ne sais pas</option><option>Moins de 20</option><option>20 à 50</option><option>50 à 100</option><option>100 à 200</option><option>Plus de 200</option></select></div>
-          <div class="field"><label for="p_rdv">Rendez-vous à gérer par semaine</label><select id="p_rdv" name="p_rdv"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>Plus de 10</option></select></div>
-          <div class="field"><label for="p_courrier">Courriers papier par mois</label><select id="p_courrier" name="p_courrier"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 20</option><option>Plus de 20</option></select></div>
-          <div class="field"><label for="p_fact">Factures émises par mois</label><select id="p_fact" name="p_fact"><option value="">Je ne sais pas</option><option>0 à 10</option><option>11 à 30</option><option>31 à 60</option><option>Plus de 60</option></select></div>
-          <div class="field"><label for="p_relances">Factures à relancer par mois</label><select id="p_relances" name="p_relances"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>11 à 25</option><option>Plus de 25</option></select></div>
-          <div class="field"><label for="p_devis">Devis envoyés par mois</label><select id="p_devis" name="p_devis"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 15</option><option>16 à 30</option><option>Plus de 30</option></select></div>
-          <div class="field"><label for="p_ferm">Fermeture dans l'année</label><select id="p_ferm" name="p_ferm"><option value="">Je ne sais pas</option><option>Aucune</option><option>1 mois</option><option>2 mois</option><option>Plus de 2 mois</option></select></div>
-          <div class="field"><label>Ce que vous aimeriez déléguer</label><div class="radio-row"><label><input type="checkbox" name="p_deleg" value="Emails et agenda" /><span>Emails et agenda</span></label><label><input type="checkbox" name="p_deleg" value="Courriers et classement" /><span>Courriers et classement</span></label><label><input type="checkbox" name="p_deleg" value="Relances et suivi des devis" /><span>Relances et suivi des devis</span></label><label><input type="checkbox" name="p_deleg" value="Factures sur mandat" /><span>Factures sur mandat</span></label><label><input type="checkbox" name="p_deleg" value="Pièces au comptable" /><span>Pièces au comptable</span></label><label><input type="checkbox" name="p_deleg" value="Un outil sur mesure" /><span>Un outil sur mesure</span></label></div></div>
-          <div class="field"><label for="p_logiciel">Logiciel de facturation ou de comptabilité utilisé</label><input type="text" id="p_logiciel" name="p_logiciel" placeholder="Ex. : Indy, Henrici, Excel, aucun…" /></div>
-          <div class="field"><label>Une préférence de formule ?</label><div class="radio-row"><label><input type="radio" name="p_pref" value="Sérénité (10 h)" /><span>Sérénité (10 h)</span></label><label><input type="radio" name="p_pref" value="Confort (20 h)" /><span>Confort (20 h)</span></label><label><input type="radio" name="p_pref" value="À l'heure" /><span>À l'heure</span></label><label><input type="radio" name="p_pref" value="Je ne sais pas" /><span>Je ne sais pas</span></label></div></div>
-        </div>
-        <div class="field">
-          <label for="message">Votre message <small style="color:var(--muted);font-weight:400">(facultatif)</small></label>
-          <textarea id="message" name="message" placeholder="Décrivez en quelques mots ce que vous cherchez à déléguer..."></textarea>
-        </div>
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true" />
         <label class="consent"><input type="checkbox" name="consent" required /><span>J'accepte que mes données soient utilisées pour répondre à ma demande, comme indiqué dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</span></label>
         <div class="submit-row">
-          <button type="submit" class="cta-btn">Envoyer ma demande <span class="arr">→</span></button>
+          <button type="submit" class="cta-btn">Envoyer <span class="arr">→</span></button>
         </div>
-        <p class="form-note" id="formMsg" role="status">Réponse sous 24&nbsp;h. Vos données ne servent qu'à traiter votre demande.</p>
+        <p class="form-note" id="formMsg" role="status">Étape suivante : une courte page pour me dire quelques mots de plus sur votre activité (facultatif).</p>
       </form>
     </div>
   </div>
@@ -1088,8 +1011,8 @@
     e.preventDefault();
     var f = e.target, msg = d.getElementById('formMsg'), btn = f.querySelector('button[type=submit]');
     if (f._gotcha && f._gotcha.value) return;
-    var data = { nom: f.nom.value, email: f.email.value, tel: f.tel.value, profil: f.profil.value, besoin: f.besoin.value, message: f.message.value, consentement: 'oui', source: 'site', date: new Date().toISOString() };
-    data.details = pick({ activite: val('p_activite'), situation: val('p_situation'), salaries: val('p_salaries'), mails: val('p_mails'), rdv: val('p_rdv'), courrier: val('p_courrier'), fact: val('p_fact'), relances: val('p_relances'), devis: val('p_devis'), ferm: val('p_ferm'), deleg: checked('p_deleg'), logiciel: val('p_logiciel'), pref: checked('p_pref')[0] || '' });
+    var data = { nom: f.nom.value, email: f.email.value, tel: f.tel.value, profil: f.profil.value, besoin: f.besoin.value, consentement: 'oui', source: 'site', date: new Date().toISOString() };
+    data.details = {};
     var lines = Object.keys(data.details).map(function (k) { var v = data.details[k]; return k + ' : ' + (Array.isArray(v) ? v.join(', ') : v); }).join('\n');
     var body = 'Nom : ' + data.nom + '\nEmail : ' + data.email + '\nTéléphone : ' + (data.tel || '—') + '\nProfil : ' + data.profil + '\nBesoin : ' + data.besoin + (lines ? '\n\n--- Précisions ---\n' + lines : '') + '\n\nMessage :\n' + (data.message || '—');
     var subject = 'Demande via Respirà — ' + data.besoin;
@@ -1103,15 +1026,20 @@
       return fetch('https://formspree.io/f/' + FORMSPREE_ID, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ nom: data.nom, email: data.email, tel: data.tel || '—', profil: data.profil, besoin: data.besoin, precisions: lines || '—', message: data.message || '—', consentement: 'oui', _subject: subject }) });
     }
+    function done() {
+      try { sessionStorage.setItem('rsp_lead', JSON.stringify({ nom: data.nom, email: data.email, besoin: data.besoin })); } catch (e) {}
+      f.reset(); msg.textContent = okMsg;
+      window.location.href = 'demande.html';
+    }
     btn.disabled = true; msg.textContent = 'Envoi en cours…';
     fetch(SB_URL + '/rest/v1/leads', { method: 'POST', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ data: data }) })
       .then(function (r) {
         if (!r.ok) throw new Error('sb');
-        if (FORMSPREE_ID) viaFormspree().catch(function () {});
-        f.reset(); syncBlocks(); msg.textContent = okMsg;
+        var fs = FORMSPREE_ID ? viaFormspree().catch(function () {}) : Promise.resolve();
+        return Promise.race([fs, new Promise(function (res) { setTimeout(res, 2500); })]).then(function () { done(); });
       })
       .catch(function () {
-        if (FORMSPREE_ID) { return viaFormspree().then(function (r) { if (r.ok) { f.reset(); syncBlocks(); msg.textContent = okMsg; } else { msg.textContent = fail; } }).catch(function () { msg.textContent = fail; }); }
+        if (FORMSPREE_ID) { return viaFormspree().then(function (r) { if (r.ok) { done(); } else { msg.textContent = fail; } }).catch(function () { msg.textContent = fail; }); }
         viaMail();
       })
       .then(function () { btn.disabled = false; });

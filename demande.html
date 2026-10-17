@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Dites-m'en plus — Respirà</title><meta name="robots" content="noindex"/>
+<style>
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/playfair-display-latin-700-normal.woff2) format('woff2');}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/playfair-display-latin-800-normal.woff2) format('woff2');}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url(fonts/playfair-display-latin-700-italic.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-italic.woff2) format('woff2');}
+:root{--primary:#6E6B4E;--card:#ECE6DC;--ink:#34331F;--muted:#8A8072}
+*{box-sizing:border-box}body{margin:0;font-family:'Inter',Calibri,sans-serif;color:var(--ink);background:#fff;line-height:1.7}
+header{background:var(--primary);padding:18px 24px}header a{font-family:'Playfair Display',Cambria,serif;font-weight:700;font-size:1.4rem;color:#fff;text-decoration:none}
+main{max-width:800px;margin:0 auto;padding:48px 24px 80px}
+h1{font-family:'Playfair Display',Cambria,serif;font-weight:800;font-size:2.4rem;line-height:1.15;margin:0 0 8px}
+h2{font-family:'Playfair Display',Cambria,serif;font-size:1.35rem;margin:36px 0 8px;color:var(--primary)}
+.upd{color:var(--muted);font-size:.9rem;margin-bottom:28px}p,li{font-size:.98rem}ul{padding-left:20px}
+mark{background:#F3E7A8;color:var(--ink);padding:1px 5px;border-radius:4px}
+.note{background:var(--card);border-radius:12px;padding:14px 18px;font-size:.9rem;margin:20px 0}
+.back{display:inline-block;margin-top:40px;color:var(--primary);font-weight:600}
+footer{background:var(--ink);color:#E3DFC4;text-align:center;padding:28px 16px;font-size:.85rem}footer a{color:#E3DFC4}
+
+main{max-width:720px}
+.lead{font-size:1.05rem;margin:0 0 28px}
+.ok{display:inline-flex;align-items:center;gap:10px;background:var(--card);border-radius:999px;padding:8px 18px 8px 10px;font-size:.9rem;margin-bottom:22px}
+.ok i{width:26px;height:26px;border-radius:50%;background:var(--primary);display:inline-flex;align-items:center;justify-content:center}
+.ok svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.field{margin-bottom:20px}.field label{display:block;font-size:.85rem;margin-bottom:6px;font-weight:500}
+.field input[type=text],.field select,.field textarea{width:100%;font:inherit;font-size:.98rem;padding:13px 16px;border-radius:12px;border:1.5px solid #d8d1c3;background:#fff;color:var(--ink)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(110,107,78,.18)}
+.field textarea{min-height:120px;resize:vertical}
+.radio-row{display:flex;gap:10px;flex-wrap:wrap}.radio-row label{margin:0;cursor:pointer}.radio-row input{position:absolute;opacity:0;width:0}
+.radio-row span{display:inline-block;padding:9px 16px;border-radius:999px;border:1.5px solid var(--primary);color:var(--primary);font-size:.9rem;font-weight:500}
+.radio-row input:checked+span{background:var(--primary);color:#fff}.radio-row input:focus-visible+span{outline:3px solid #A9A47A;outline-offset:2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}@media(max-width:620px){.grid2{grid-template-columns:1fr}}
+.btn{background:var(--primary);color:#fff;border:0;border-radius:999px;padding:16px 34px;font:inherit;font-weight:600;cursor:pointer}.btn:hover{background:var(--ink)}
+.skip{margin-left:18px;color:var(--primary);font-weight:600}
+#msg{margin-top:16px;font-size:.92rem;color:var(--muted)}
+h1{font-size:2.1rem}
+.field:has(.radio-row){grid-column:1/-1}
+</style></head><body>
+<header><a href="index.html">Respirà</a></header><main>
+<span class="ok"><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><span id="hello">Votre demande est bien envoyée.</span></span>
+<h1>Dites-moi plus sur vos besoins</h1>
+<p class="lead">Facultatif, mais utile : quelques ordres de grandeur me permettent de vous envoyer un devis juste dès ma première réponse. « Je ne sais pas » est une réponse.</p>
+<form id="f">
+<div class="field"><label for="p_activite">Votre activité</label><input type="text" id="p_activite" name="p_activite" placeholder="Ex. : électricien, sophrologue, cabinet d'architecte…" /></div>
+<div class="grid2">
+
+          
+          
+          <div class="field"><label for="p_situation">Où en est votre activité ?</label><select id="p_situation" name="p_situation"><option value="">Je ne sais pas</option><option>Déjà en activité</option><option>En cours de création</option></select></div>
+          <div class="field"><label for="p_salaries">Nombre de salariés</label><select id="p_salaries" name="p_salaries"><option value="">Je ne sais pas</option><option>Aucun, je travaille seul(e)</option><option>1 à 2</option><option>3 à 5</option><option>6 à 10</option><option>Plus de 10</option></select></div>
+          <div class="field"><label for="p_mails">Emails reçus par semaine</label><select id="p_mails" name="p_mails"><option value="">Je ne sais pas</option><option>Moins de 20</option><option>20 à 50</option><option>50 à 100</option><option>100 à 200</option><option>Plus de 200</option></select></div>
+          <div class="field"><label for="p_rdv">Rendez-vous à gérer par semaine</label><select id="p_rdv" name="p_rdv"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>Plus de 10</option></select></div>
+          <div class="field"><label for="p_courrier">Courriers papier par mois</label><select id="p_courrier" name="p_courrier"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 20</option><option>Plus de 20</option></select></div>
+          <div class="field"><label for="p_fact">Factures émises par mois</label><select id="p_fact" name="p_fact"><option value="">Je ne sais pas</option><option>0 à 10</option><option>11 à 30</option><option>31 à 60</option><option>Plus de 60</option></select></div>
+          <div class="field"><label for="p_relances">Factures à relancer par mois</label><select id="p_relances" name="p_relances"><option value="">Je ne sais pas</option><option>0 à 3</option><option>4 à 10</option><option>11 à 25</option><option>Plus de 25</option></select></div>
+          <div class="field"><label for="p_devis">Devis envoyés par mois</label><select id="p_devis" name="p_devis"><option value="">Je ne sais pas</option><option>0 à 5</option><option>6 à 15</option><option>16 à 30</option><option>Plus de 30</option></select></div>
+          <div class="field"><label for="p_ferm">Fermeture dans l'année</label><select id="p_ferm" name="p_ferm"><option value="">Je ne sais pas</option><option>Aucune</option><option>1 mois</option><option>2 mois</option><option>Plus de 2 mois</option></select></div>
+          <div class="field"><label>Ce que vous aimeriez déléguer</label><div class="radio-row"><label><input type="checkbox" name="p_deleg" value="Emails et agenda" /><span>Emails et agenda</span></label><label><input type="checkbox" name="p_deleg" value="Courriers et classement" /><span>Courriers et classement</span></label><label><input type="checkbox" name="p_deleg" value="Relances et suivi des devis" /><span>Relances et suivi des devis</span></label><label><input type="checkbox" name="p_deleg" value="Factures sur mandat" /><span>Factures sur mandat</span></label><label><input type="checkbox" name="p_deleg" value="Pièces au comptable" /><span>Pièces au comptable</span></label><label><input type="checkbox" name="p_deleg" value="Un outil sur mesure" /><span>Un outil sur mesure</span></label></div></div>
+          <div class="field"><label for="p_logiciel">Logiciel de facturation ou de comptabilité utilisé</label><input type="text" id="p_logiciel" name="p_logiciel" placeholder="Ex. : Indy, Henrici, Excel, aucun…" /></div>
+          <div class="field"><label>Une préférence de formule ?</label><div class="radio-row"><label><input type="radio" name="p_pref" value="Sérénité (10 h)" /><span>Sérénité (10 h)</span></label><label><input type="radio" name="p_pref" value="Confort (20 h)" /><span>Confort (20 h)</span></label><label><input type="radio" name="p_pref" value="À l'heure" /><span>À l'heure</span></label><label><input type="radio" name="p_pref" value="Je ne sais pas" /><span>Je ne sais pas</span></label></div></div>
+        
+</div>
+<div class="field"><label for="message">Autre chose à me dire ?</label><textarea id="message" name="message" placeholder="Une situation, une urgence, une question…"></textarea></div>
+<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true" />
+<button class="btn" type="submit">Envoyer ces précisions</button><a class="skip" href="index.html">Plus tard, retour au site</a>
+<p id="msg" role="status"></p>
+</form>
+<a class="back" href="index.html" style="display:none">Retour</a>
+</main>
+<footer>© Respirà · <a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a></footer>
+<script>
+(function(){
+var SB_URL='https://adnxvlkosqowyfqatkum.supabase.co',SB_KEY='sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl',FS='xjygjjao';
+var lead={};try{lead=JSON.parse(sessionStorage.getItem('rsp_lead')||'{}')}catch(e){}
+if(lead.nom){document.getElementById('hello').textContent='Merci '+lead.nom.split(' ')[0]+', votre demande est bien envoyée.';}
+var f=document.getElementById('f'),msg=document.getElementById('msg');
+f.addEventListener('submit',function(e){e.preventDefault();
+ if(f._gotcha.value)return;
+ var det={};
+ ['p_activite','p_situation','p_salaries','p_mails','p_rdv','p_courrier','p_fact','p_relances','p_devis','p_ferm','p_logiciel'].forEach(function(n){var v=f[n].value;if(v)det[n]=v});
+ var dl=[].map.call(f.querySelectorAll('input[name=p_deleg]:checked'),function(x){return x.value});if(dl.length)det.p_deleg=dl;
+ var pr=f.querySelector('input[name=p_pref]:checked');if(pr)det.p_pref=pr.value;
+ var data={nom:lead.nom||'(voir demande précédente)',email:lead.email||'',tel:'',profil:'Professionnel',besoin:lead.besoin||'',message:f.message.value,consentement:'oui',source:'site-precisions',date:new Date().toISOString(),details:det};
+ var lines=Object.keys(det).map(function(k){return k+' : '+(Array.isArray(det[k])?det[k].join(', '):det[k])}).join('\n');
+ var btn=f.querySelector('button');btn.disabled=true;msg.textContent='Envoi en cours…';
+ var sb=fetch(SB_URL+'/rest/v1/leads',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({data:data})});
+ var fs=fetch('https://formspree.io/f/'+FS,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},body:JSON.stringify({nom:data.nom,email:data.email,besoin:data.besoin,precisions:lines||'—',message:data.message||'—',_subject:'Précisions — '+(lead.nom||'demande Respirà')})});
+ Promise.all([sb.catch(function(){return {ok:false}}),fs.catch(function(){return {ok:false}})]).then(function(r){
+  if(r[0].ok||r[1].ok){f.innerHTML='<h2>Merci, c\'est reçu.</h2><p>Je vous réponds sous 24&nbsp;h avec une première proposition.</p><p><a class="back" href="index.html">← Retour au site</a></p>';}
+  else{btn.disabled=false;msg.textContent='Envoi impossible pour le moment. Écrivez-moi directement à castellisab@gmail.com.';}
+ });
+});
+})();
+</script></body></html>
