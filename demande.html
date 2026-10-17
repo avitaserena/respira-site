@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Dites-m'en plus — Respirà</title><meta name="robots" content="noindex"/>
+<title>Demander un devis — Respirà</title><meta name="robots" content="noindex"/>
 <style>
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/playfair-display-latin-700-normal.woff2) format('woff2');}
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/playfair-display-latin-800-normal.woff2) format('woff2');}
@@ -27,13 +27,14 @@ main{max-width:720px}
 .ok i{width:26px;height:26px;border-radius:50%;background:var(--primary);display:inline-flex;align-items:center;justify-content:center}
 .ok svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .field{margin-bottom:20px}.field label{display:block;font-size:.85rem;margin-bottom:6px;font-weight:500}
-.field input[type=text],.field select,.field textarea{width:100%;font:inherit;font-size:.98rem;padding:13px 16px;border-radius:12px;border:1.5px solid #d8d1c3;background:#fff;color:var(--ink)}
+.field input[type=text],.field input[type=email],.field input[type=tel],.field select,.field textarea{width:100%;font:inherit;font-size:.98rem;padding:13px 16px;border-radius:12px;border:1.5px solid #d8d1c3;background:#fff;color:var(--ink)}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(110,107,78,.18)}
 .field textarea{min-height:120px;resize:vertical}
 .radio-row{display:flex;gap:10px;flex-wrap:wrap}.radio-row label{margin:0;cursor:pointer}.radio-row input{position:absolute;opacity:0;width:0}
 .radio-row span{display:inline-block;padding:9px 16px;border-radius:999px;border:1.5px solid var(--primary);color:var(--primary);font-size:.9rem;font-weight:500}
 .radio-row input:checked+span{background:var(--primary);color:#fff}.radio-row input:focus-visible+span{outline:3px solid #A9A47A;outline-offset:2px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}@media(max-width:620px){.grid2{grid-template-columns:1fr}}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;margin:6px 0 22px}.consent input{margin-top:4px}
 .btn{background:var(--primary);color:#fff;border:0;border-radius:999px;padding:16px 34px;font:inherit;font-weight:600;cursor:pointer}.btn:hover{background:var(--ink)}
 .skip{margin-left:18px;color:var(--primary);font-weight:600}
 #msg{margin-top:16px;font-size:.92rem;color:var(--muted)}
@@ -41,10 +42,16 @@ h1{font-size:2.1rem}
 .field:has(.radio-row){grid-column:1/-1}
 </style></head><body>
 <header><a href="index.html">Respirà</a></header><main>
-<span class="ok"><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><span id="hello">Votre demande est bien envoyée.</span></span>
-<h1>Dites-moi plus sur vos besoins</h1>
-<p class="lead">Facultatif, mais utile : quelques ordres de grandeur me permettent de vous envoyer un devis juste dès ma première réponse. « Je ne sais pas » est une réponse.</p>
+<h1>Parlons de votre besoin</h1>
+<p class="lead">Quelques informations pour que je vous envoie un devis juste dès ma première réponse, sous 24&nbsp;h. Seuls le nom et l'email sont indispensables : le reste est facultatif, « Je ne sais pas » est une réponse.</p>
 <form id="f">
+<div class="grid2">
+<div class="field"><label for="nom">Nom &amp; prénom</label><input type="text" id="nom" name="nom" required autocomplete="name" /></div>
+<div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required autocomplete="email" /></div>
+<div class="field"><label for="tel">Téléphone (optionnel)</label><input type="tel" id="tel" name="tel" autocomplete="tel" /></div>
+<div class="field"><label for="besoin">Votre besoin principal</label><select id="besoin" name="besoin"><option>Facturation &amp; relances</option><option>Courriers &amp; emails</option><option>Classement &amp; archives</option><option>Boîte mail &amp; agenda</option><option>Suivi de dossiers</option><option>Outils &amp; méthodes sur mesure</option><option>Autre</option></select></div>
+</div>
+<h2>Votre activité en quelques chiffres</h2>
 <div class="field"><label for="p_activite">Votre activité</label><input type="text" id="p_activite" name="p_activite" placeholder="Ex. : électricien, sophrologue, cabinet d'architecte…" /></div>
 <div class="grid2">
 
@@ -66,7 +73,8 @@ h1{font-size:2.1rem}
 </div>
 <div class="field"><label for="message">Autre chose à me dire ?</label><textarea id="message" name="message" placeholder="Une situation, une urgence, une question…"></textarea></div>
 <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true" />
-<button class="btn" type="submit">Envoyer ces précisions</button><a class="skip" href="index.html">Plus tard, retour au site</a>
+<label class="consent"><input type="checkbox" name="consent" required /><span>J'accepte que mes données soient utilisées pour répondre à ma demande, comme indiqué dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</span></label>
+<button class="btn" type="submit">Envoyer ma demande</button>
 <p id="msg" role="status"></p>
 </form>
 <a class="back" href="index.html" style="display:none">Retour</a>
@@ -74,25 +82,23 @@ h1{font-size:2.1rem}
 <footer>© Respirà · <a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a></footer>
 <script>
 (function(){
-var SB_URL='https://adnxvlkosqowyfqatkum.supabase.co',SB_KEY='sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl',FS='xjygjjao';
-var lead={};try{lead=JSON.parse(sessionStorage.getItem('rsp_lead')||'{}')}catch(e){}
-if(lead.nom){document.getElementById('hello').textContent='Merci '+lead.nom.split(' ')[0]+', votre demande est bien envoyée.';}
+var SB_URL='https://adnxvlkosqowyfqatkum.supabase.co',SB_KEY='sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl',FS='xjygjjao',U='castellisab',H='gmail.com';
 var f=document.getElementById('f'),msg=document.getElementById('msg');
+var map={activite:'p_activite',situation:'p_situation',salaries:'p_salaries',mails:'p_mails',rdv:'p_rdv',courrier:'p_courrier',fact:'p_fact',relances:'p_relances',devis:'p_devis',ferm:'p_ferm',logiciel:'p_logiciel'};
 f.addEventListener('submit',function(e){e.preventDefault();
  if(f._gotcha.value)return;
- var det={};
- ['p_activite','p_situation','p_salaries','p_mails','p_rdv','p_courrier','p_fact','p_relances','p_devis','p_ferm','p_logiciel'].forEach(function(n){var v=f[n].value;if(v)det[n]=v});
- var dl=[].map.call(f.querySelectorAll('input[name=p_deleg]:checked'),function(x){return x.value});if(dl.length)det.p_deleg=dl;
- var pr=f.querySelector('input[name=p_pref]:checked');if(pr)det.p_pref=pr.value;
- var data={nom:lead.nom||'(voir demande précédente)',email:lead.email||'',tel:'',profil:'Professionnel',besoin:lead.besoin||'',message:f.message.value,consentement:'oui',source:'site-precisions',date:new Date().toISOString(),details:det};
+ var det={};Object.keys(map).forEach(function(k){var v=f[map[k]].value;if(v)det[k]=v});
+ var dl=[].map.call(f.querySelectorAll('input[name=p_deleg]:checked'),function(x){return x.value});if(dl.length)det.deleg=dl;
+ var pr=f.querySelector('input[name=p_pref]:checked');if(pr)det.pref=pr.value;
+ var data={nom:f.nom.value,email:f.email.value,tel:f.tel.value,profil:'Professionnel',besoin:f.besoin.value,message:f.message.value,consentement:'oui',source:'site',date:new Date().toISOString(),details:det};
  var lines=Object.keys(det).map(function(k){return k+' : '+(Array.isArray(det[k])?det[k].join(', '):det[k])}).join('\n');
- var btn=f.querySelector('button');btn.disabled=true;msg.textContent='Envoi en cours…';
- var sb=fetch(SB_URL+'/rest/v1/leads',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({data:data})});
- var fs=fetch('https://formspree.io/f/'+FS,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},body:JSON.stringify({nom:data.nom,email:data.email,besoin:data.besoin,precisions:lines||'—',message:data.message||'—',_subject:'Précisions — '+(lead.nom||'demande Respirà')})});
- Promise.all([sb.catch(function(){return {ok:false}}),fs.catch(function(){return {ok:false}})]).then(function(r){
-  if(r[0].ok||r[1].ok){f.innerHTML='<h2>Merci, c\'est reçu.</h2><p>Je vous réponds sous 24&nbsp;h avec une première proposition.</p><p><a class="back" href="index.html">← Retour au site</a></p>';}
-  else{btn.disabled=false;msg.textContent='Envoi impossible pour le moment. Écrivez-moi directement à castellisab@gmail.com.';}
- });
+ var btn=f.querySelector('button[type=submit]');btn.disabled=true;msg.textContent='Envoi en cours…';
+ function fs(){return fetch('https://formspree.io/f/'+FS,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},body:JSON.stringify({nom:data.nom,email:data.email,tel:data.tel||'—',besoin:data.besoin,precisions:lines||'—',message:data.message||'—',_subject:'Demande via Respirà — '+data.besoin})})}
+ function ok(){f.innerHTML='<h2>Merci, c\'est reçu.</h2><p>Je vous réponds sous 24&nbsp;h avec une première proposition.</p><p><a class="back" href="index.html">← Retour au site</a></p>';window.scrollTo(0,0)}
+ function mail(){msg.innerHTML='Envoi impossible pour le moment. Écrivez-moi directement à '+U+'@'+H+'.';btn.disabled=false}
+ fetch(SB_URL+'/rest/v1/leads',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({data:data})})
+ .then(function(r){if(!r.ok)throw 0;return Promise.race([fs().catch(function(){}),new Promise(function(r){setTimeout(r,2500)})])}).then(ok)
+ .catch(function(){fs().then(function(r){r.ok?ok():mail()}).catch(mail)});
 });
 })();
 </script></body></html>

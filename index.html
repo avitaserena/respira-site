@@ -366,6 +366,12 @@
   .totop:hover { background:var(--ink); }
 
   /* ---- révélations ---- */
+  .contact-card { background:var(--card); border-radius:26px; padding:40px 36px; color:var(--ink); box-shadow:0 30px 60px -30px rgba(0,0,0,.45); }
+  .contact-card h3 { font-size:1.7rem; margin-bottom:12px; }
+  .contact-card p { margin:0 0 24px; }
+  .contact-card .form-note { margin:18px 0 0; font-size:.85rem; color:var(--muted); }
+  .contact-card .cta-btn { background:var(--primary); color:#fff; }
+  .contact-card .cta-btn:hover { background:var(--ink); }
   /* ---- outils : cartes ---- */
   .tool-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:44px; }
   .tool-card { background:var(--card); border-radius:20px; padding:30px 28px 28px; }
@@ -810,39 +816,12 @@
         <div class="item"><div class="icon-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><span>Porto-Vecchio, Corse — et à distance partout en France</span></div>
         <div class="item"><div class="icon-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><span>Premier échange gratuit, sans engagement</span></div>
       </div>
-      <form id="contactForm" class="reveal" style="transition-delay:.15s">
-        <div class="field">
-          <label for="nom">Nom &amp; prénom</label>
-          <input type="text" id="nom" name="nom" required autocomplete="name" />
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required autocomplete="email" />
-        </div>
-        <div class="field">
-          <label for="tel">Téléphone (optionnel)</label>
-          <input type="tel" id="tel" name="tel" autocomplete="tel" />
-        </div>
-        <input type="hidden" name="profil" value="Professionnel" />
-        <div class="field">
-          <label for="besoin">Votre besoin principal</label>
-          <select id="besoin" name="besoin">
-            <option>Facturation &amp; relances</option>
-            <option>Courriers &amp; emails</option>
-            <option>Classement &amp; archives</option>
-            <option>Boîte mail &amp; agenda</option>
-            <option>Suivi de dossiers</option>
-            <option>Outils &amp; méthodes sur mesure</option>
-            <option>Autre</option>
-          </select>
-        </div>
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true" />
-        <label class="consent"><input type="checkbox" name="consent" required /><span>J'accepte que mes données soient utilisées pour répondre à ma demande, comme indiqué dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</span></label>
-        <div class="submit-row">
-          <button type="submit" class="cta-btn">Envoyer <span class="arr">→</span></button>
-        </div>
-        <p class="form-note" id="formMsg" role="status">Étape suivante : une courte page pour me dire quelques mots de plus sur votre activité (facultatif).</p>
-      </form>
+      <div class="contact-card reveal" style="transition-delay:.15s">
+        <h3>Demander un devis gratuit</h3>
+        <p>Quelques questions sur votre activité, deux minutes, et je vous réponds sous 24&nbsp;h avec une première proposition chiffrée.</p>
+        <a class="cta-btn" href="demande.html">Je décris mon besoin <span class="arr">→</span></a>
+        <p class="form-note">Sans engagement · vos réponses ne servent qu'à préparer votre devis</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1000,50 +979,6 @@
   /* ---- formulaire : envoi vers la base de Sabrina (Supabase), puis repli Formspree ou messagerie ---- */
   var FORMSPREE_ID = 'xjygjjao';
   var SB_URL = 'https://adnxvlkosqowyfqatkum.supabase.co', SB_KEY = 'sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl';
-  var form = d.getElementById('contactForm');
-  function syncBlocks() {
-  }
-  syncBlocks();
-  function val(n) { var el = form.querySelector('[name=' + n + ']'); return el ? el.value : ''; }
-  function checked(n) { return Array.prototype.map.call(form.querySelectorAll('input[name=' + n + ']:checked'), function (x) { return x.value; }); }
-  function pick(map) { var o = {}; Object.keys(map).forEach(function (k) { var v = map[k]; if (Array.isArray(v) ? v.length : v) o[k] = v; }); return o; }
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var f = e.target, msg = d.getElementById('formMsg'), btn = f.querySelector('button[type=submit]');
-    if (f._gotcha && f._gotcha.value) return;
-    var data = { nom: f.nom.value, email: f.email.value, tel: f.tel.value, profil: f.profil.value, besoin: f.besoin.value, consentement: 'oui', source: 'site', date: new Date().toISOString() };
-    data.details = {};
-    var lines = Object.keys(data.details).map(function (k) { var v = data.details[k]; return k + ' : ' + (Array.isArray(v) ? v.join(', ') : v); }).join('\n');
-    var body = 'Nom : ' + data.nom + '\nEmail : ' + data.email + '\nTéléphone : ' + (data.tel || '—') + '\nProfil : ' + data.profil + '\nBesoin : ' + data.besoin + (lines ? '\n\n--- Précisions ---\n' + lines : '') + '\n\nMessage :\n' + (data.message || '—');
-    var subject = 'Demande via Respirà — ' + data.besoin;
-    var okMsg = 'Merci, votre demande est bien envoyée. Je vous réponds sous 24 h.';
-    var fail = 'Envoi impossible pour le moment. Écrivez-moi directement à ' + CONTACT_USER + '@' + CONTACT_HOST + '.';
-    function viaMail() {
-      msg.textContent = 'Votre messagerie s\'ouvre avec le message prêt à partir. Merci !';
-      window.location.href = 'mailto:' + CONTACT_USER + '@' + CONTACT_HOST + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    }
-    function viaFormspree() {
-      return fetch('https://formspree.io/f/' + FORMSPREE_ID, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nom: data.nom, email: data.email, tel: data.tel || '—', profil: data.profil, besoin: data.besoin, precisions: lines || '—', message: data.message || '—', consentement: 'oui', _subject: subject }) });
-    }
-    function done() {
-      try { sessionStorage.setItem('rsp_lead', JSON.stringify({ nom: data.nom, email: data.email, besoin: data.besoin })); } catch (e) {}
-      f.reset(); msg.textContent = okMsg;
-      window.location.href = 'demande.html';
-    }
-    btn.disabled = true; msg.textContent = 'Envoi en cours…';
-    fetch(SB_URL + '/rest/v1/leads', { method: 'POST', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ data: data }) })
-      .then(function (r) {
-        if (!r.ok) throw new Error('sb');
-        var fs = FORMSPREE_ID ? viaFormspree().catch(function () {}) : Promise.resolve();
-        return Promise.race([fs, new Promise(function (res) { setTimeout(res, 2500); })]).then(function () { done(); });
-      })
-      .catch(function () {
-        if (FORMSPREE_ID) { return viaFormspree().then(function (r) { if (r.ok) { done(); } else { msg.textContent = fail; } }).catch(function () { msg.textContent = fail; }); }
-        viaMail();
-      })
-      .then(function () { btn.disabled = false; });
-  });
 })();
 </script>
 
