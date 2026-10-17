@@ -274,11 +274,9 @@
   .mission-card li:hover::before { width:13px; }
 
   /* ---- étapes ---- */
-  #methode { background:var(--ink); color:var(--paper); position:relative; overflow:hidden; }
-  #methode .section-label { color:var(--accent); }
-  #methode .subtitle { color:var(--accent); }
+  #methode { background:#fff; color:var(--ink); position:relative; overflow:hidden; }
   .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:64px; position:relative; }
-  .steps::before { content:""; position:absolute; left:6%; right:6%; top:34px; height:2px; background:linear-gradient(90deg, var(--second), rgba(169,164,122,.15)); transform:scaleX(0); transform-origin:0 50%; transition:transform 1.6s var(--ease) .2s; }
+  .steps::before { content:""; position:absolute; left:6%; right:6%; top:34px; height:2px; background:linear-gradient(90deg, var(--primary), rgba(110,107,78,.15)); transform:scaleX(0); transform-origin:0 50%; transition:transform 1.6s var(--ease) .2s; }
   .steps.visible::before, html:not(.js) .steps::before { transform:scaleX(1); }
   .step { position:relative; }
   .step .num {
@@ -287,9 +285,9 @@
     transition:background .3s, transform .4s var(--ease), color .3s;
   }
   .step:hover .num { background:var(--accent); color:var(--ink); transform:scale(1.1) rotate(-6deg); }
-  .step h3 { font-size:1.35rem; margin:26px 0 8px; color:var(--paper); }
-  .step p { color:var(--accent); font-size:.97rem; margin:0; max-width:300px; }
-  .steps-sign { font-family:'Playfair Display',serif; font-style:italic; font-weight:700; color:var(--accent); font-size:clamp(1.3rem,3vw,1.8rem); margin-top:56px; }
+  .step h3 { font-size:1.35rem; margin:26px 0 8px; color:var(--ink); }
+  .step p { color:var(--muted); font-size:.97rem; margin:0; max-width:300px; }
+  .steps-sign { font-family:'Playfair Display',serif; font-style:italic; font-weight:700; color:var(--primary); font-size:clamp(1.3rem,3vw,1.8rem); margin-top:56px; }
 
   /* ---- particuliers rows ---- */
   .rows { margin-top:56px; }
@@ -743,7 +741,7 @@
 <section id="methode">
   <div class="wrap">
     <div class="section-label reveal">Comment ça se passe</div>
-    <h2 class="big-title on-dark reveal">En trois temps.</h2>
+    <h2 class="big-title reveal">En trois temps.</h2>
     <p class="subtitle reveal">Pas de paperasse inutile pour démarrer : on se parle, je vous chiffre, on commence.</p>
     <div class="steps reveal">
       <div class="step">
