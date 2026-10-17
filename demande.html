@@ -83,7 +83,7 @@ h1{font-size:2.1rem}
 <footer>© Respirà · <a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a></footer>
 <script>
 (function(){
-var SB_URL='https://adnxvlkosqowyfqatkum.supabase.co',SB_KEY='sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl',FS='xjygjjao',U='castellisab',H='gmail.com';
+var SB_URL='https://adnxvlkosqowyfqatkum.supabase.co',SB_KEY='sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl',FS='xjygjjao',U='contact',H='xn--respir-nta.fr';
 var f=document.getElementById('f'),msg=document.getElementById('msg');
 var map={activite:'p_activite',situation:'p_situation',salaries:'p_salaries',mails:'p_mails',rdv:'p_rdv',courrier:'p_courrier',fact:'p_fact',relances:'p_relances',devis:'p_devis',ferm:'p_ferm',logiciel:'p_logiciel'};
 f.addEventListener('submit',function(e){e.preventDefault();
@@ -97,7 +97,7 @@ f.addEventListener('submit',function(e){e.preventDefault();
  var btn=f.querySelector('button[type=submit]');btn.disabled=true;msg.textContent='Envoi en cours…';
  function fs(){return fetch('https://formspree.io/f/'+FS,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},body:JSON.stringify({nom:data.nom,email:data.email,tel:data.tel||'—',besoin:data.besoin,precisions:lines||'—',message:data.message||'—',_subject:'Demande via Respirà — '+data.besoin})})}
  function ok(){f.innerHTML='<h2>Merci, c\'est reçu.</h2><p>Je vous réponds sous 24&nbsp;h avec une première proposition.</p><p><a class="back" href="index.html">← Retour au site</a></p>';window.scrollTo(0,0)}
- function mail(){msg.innerHTML='Envoi impossible pour le moment. Écrivez-moi directement à '+U+'@'+H+'.';btn.disabled=false}
+ function mail(){msg.innerHTML='Envoi impossible pour le moment. Écrivez-moi directement à contact@respirà.fr.';btn.disabled=false}
  fetch(SB_URL+'/rest/v1/leads',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({data:data})})
  .then(function(r){if(!r.ok)throw 0;return Promise.race([fs().catch(function(){}),new Promise(function(r){setTimeout(r,2500)})])}).then(ok)
  .catch(function(){fs().then(function(r){r.ok?ok():mail()}).catch(mail)});
