@@ -366,6 +366,11 @@
   .totop:hover { background:var(--ink); }
 
   /* ---- révélations ---- */
+  /* ---- vidéo de présentation ---- */
+  .demo-video { margin:44px auto 8px; max-width:980px; }
+  .demo-video .frame { position:relative; border-radius:22px; overflow:hidden; background:var(--primary); box-shadow:0 30px 70px -30px rgba(52,51,31,.55), 0 0 0 1px rgba(52,51,31,.12); aspect-ratio:16/9; }
+  .demo-video video { display:block; width:100%; height:100%; object-fit:cover; background:var(--primary); }
+  .demo-video figcaption { margin-top:14px; text-align:center; font-size:.9rem; color:var(--muted); }
   .js .reveal { opacity:0; transform:translateY(30px); transition:opacity .8s var(--ease), transform .8s var(--ease); will-change:opacity, transform; }
   .js .reveal.visible { opacity:1; transform:none; }
   .js .reveal.visible.tilt-ready { transition:opacity .8s var(--ease), transform .25s ease, box-shadow .3s ease, border-color .3s ease; }
@@ -679,6 +684,15 @@
     <div class="section-label reveal">Sur mesure</div>
     <h2 class="big-title reveal">Vos outils du quotidien.</h2>
     <p class="subtitle reveal">Je crée pour vous un tableau de bord en ligne, à votre image, que nous partageons : vous voyez où en sont vos clients, vos devis, vos factures et mes relances, et nous échangeons dans une petite messagerie commune. Livré clé en main, sans abonnement.</p>
+    <figure class="demo-video reveal">
+      <div class="frame">
+        <video controls preload="none" playsinline poster="video/respira-poster.jpg" aria-label="Présentation en vidéo de l'outil Respirà : clients, demandes, devis, factures, relances et pièces pour le comptable (musique, sans paroles)">
+          <source src="video/respira-presentation.mp4" type="video/mp4">
+          Votre navigateur ne lit pas cette vidéo.
+        </video>
+      </div>
+      <figcaption>L'outil en 1 minute 25 · exemple avec des données fictives · musique, sans paroles</figcaption>
+    </figure>
     <div class="tool-grid">
       <ul class="tool-list reveal">
         <li><b>Tous vos clients au même endroit</b><span>Une fiche par client, retrouvée en tapant simplement son nom.</span></li>
