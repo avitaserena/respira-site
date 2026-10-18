@@ -851,8 +851,8 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
-  /* ---- adresse de contact : à remplacer par contact@respirà.fr (xn--respir-nta.fr) dès que la messagerie pro est active ---- */
-  var CONTACT_USER = 'castellisab', CONTACT_HOST = 'gmail.com';
+  /* ---- adresse de contact : redirection OVH vers Gmail. mailto en écriture technique (sûre), affichage avec l'accent ---- */
+  var CONTACT_USER = 'contact', CONTACT_HOST = 'xn--respir-nta.fr', CONTACT_SHOW = 'contact@respirà.fr';
 
   /* ---- titres : découpe mot à mot pour l'animation ---- */
   d.querySelectorAll('h2.big-title').forEach(function (h) {
