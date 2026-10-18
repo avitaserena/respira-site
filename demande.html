@@ -30,6 +30,7 @@ main{max-width:720px}
 .field input[type=text],.field input[type=email],.field input[type=tel],.field select,.field textarea{width:100%;font:inherit;font-size:.98rem;padding:13px 16px;border-radius:12px;border:1.5px solid #d8d1c3;background:#fff;color:var(--ink)}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(110,107,78,.18)}
 .field textarea{min-height:120px;resize:vertical}
+.field[hidden]{display:none}
 .radio-row{display:flex;gap:10px;flex-wrap:wrap}.radio-row label{margin:0;cursor:pointer}.radio-row input{position:absolute;opacity:0;width:0}
 .radio-row span{display:inline-block;padding:9px 16px;border-radius:999px;border:1.5px solid var(--primary);color:var(--primary);font-size:.9rem;font-weight:500}
 .radio-row input:checked+span{background:var(--primary);color:#fff}.radio-row input:focus-visible+span{outline:3px solid #A9A47A;outline-offset:2px}
@@ -49,7 +50,8 @@ h1{font-size:2.1rem}
 <div class="field"><label for="nom">Nom &amp; prénom</label><input type="text" id="nom" name="nom" required autocomplete="name" /></div>
 <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required autocomplete="email" /></div>
 <div class="field"><label for="tel">Téléphone (optionnel)</label><input type="tel" id="tel" name="tel" autocomplete="tel" /></div>
-<div class="field"><label for="besoin">Votre besoin principal</label><select id="besoin" name="besoin"><option>Facturation &amp; relances</option><option>Courriers &amp; emails</option><option>Classement &amp; archives</option><option>Boîte mail &amp; agenda</option><option>Suivi de dossiers</option><option>Outils &amp; méthodes sur mesure</option><option>Autre</option></select></div>
+<div class="field"><label for="besoin">Votre besoin principal</label><select id="besoin" name="besoin"><option>Facturation &amp; relances</option><option>Courriers &amp; emails</option><option>Classement &amp; archives</option><option>Boîte mail &amp; agenda</option><option>Suivi de dossiers</option><option>Outils &amp; méthodes sur mesure</option><option>Tout ce que vous proposez</option><option>Autre</option></select></div>
+<div class="field" id="autre-wrap" hidden><label for="besoin_autre">Décrivez votre besoin</label><textarea id="besoin_autre" name="besoin_autre" rows="3" placeholder="Dites-moi en quelques mots ce que vous aimeriez déléguer…"></textarea></div>
 </div>
 <h2>Votre activité en quelques chiffres</h2>
 <div class="field"><label for="p_activite">Votre activité</label><input type="text" id="p_activite" name="p_activite" placeholder="Ex. : électricien, sophrologue, cabinet d'architecte…" /></div>
@@ -68,7 +70,8 @@ h1{font-size:2.1rem}
           <div class="field"><label for="p_ferm">Fermeture dans l'année</label><select id="p_ferm" name="p_ferm"><option value="">Je ne sais pas</option><option>Aucune</option><option>1 mois</option><option>2 mois</option><option>Plus de 2 mois</option></select></div>
           <div class="field"><label>Ce que vous aimeriez déléguer</label><div class="radio-row"><label><input type="checkbox" name="p_deleg" value="Emails et agenda" /><span>Emails et agenda</span></label><label><input type="checkbox" name="p_deleg" value="Courriers et classement" /><span>Courriers et classement</span></label><label><input type="checkbox" name="p_deleg" value="Relances et suivi des devis" /><span>Relances et suivi des devis</span></label><label><input type="checkbox" name="p_deleg" value="Factures sur mandat" /><span>Factures sur mandat</span></label><label><input type="checkbox" name="p_deleg" value="Pièces au comptable" /><span>Pièces au comptable</span></label><label><input type="checkbox" name="p_deleg" value="Un outil sur mesure" /><span>Un outil sur mesure</span></label></div></div>
           <div class="field"><label for="p_logiciel">Logiciel de facturation ou de comptabilité utilisé</label><input type="text" id="p_logiciel" name="p_logiciel" placeholder="Ex. : Indy, Henrici, Excel, aucun…" /></div>
-          <div class="field"><label>Seriez-vous intéressé(e) par un outil en ligne partagé avec moi ? <span style="font-weight:400;color:var(--muted)">(clients, devis, factures et relances au même endroit, livré clé en main, sans abonnement)</span></label><div class="radio-row"><label><input type="radio" name="p_outil" value="Oui, ça m'intéresse" /><span>Oui, ça m'intéresse</span></label><label><input type="radio" name="p_outil" value="Peut-être, j'aimerais en savoir plus" /><span>Peut-être, à voir</span></label><label><input type="radio" name="p_outil" value="Pas pour l'instant" /><span>Pas pour l'instant</span></label></div></div>
+          <div class="field"><label>Avez-vous un comptable ?</label><div class="radio-row"><label><input type="radio" name="p_compta" value="Oui" /><span>Oui</span></label><label><input type="radio" name="p_compta" value="Non" /><span>Non</span></label></div></div>
+          <div class="field"><label>Seriez-vous intéressé(e) par la plateforme Respirà partagée avec moi ? <span style="font-weight:400;color:var(--muted)">(clients, devis, factures, relances et messagerie directe au même endroit, livrée clé en main, sans abonnement)</span></label><div class="radio-row"><label><input type="radio" name="p_outil" value="Oui, ça m'intéresse" /><span>Oui, ça m'intéresse</span></label><label><input type="radio" name="p_outil" value="Peut-être, j'aimerais en savoir plus" /><span>Peut-être, à voir</span></label><label><input type="radio" name="p_outil" value="Pas pour l'instant" /><span>Pas pour l'instant</span></label></div></div>
 <div class="field"><label>Une préférence de formule ?</label><div class="radio-row"><label><input type="radio" name="p_pref" value="Sérénité (10 h)" /><span>Sérénité (10 h)</span></label><label><input type="radio" name="p_pref" value="Confort (20 h)" /><span>Confort (20 h)</span></label><label><input type="radio" name="p_pref" value="À l'heure" /><span>À l'heure</span></label><label><input type="radio" name="p_pref" value="Je ne sais pas" /><span>Je ne sais pas</span></label></div></div>
         
 </div>
@@ -85,6 +88,7 @@ h1{font-size:2.1rem}
 (function(){
 var SB_URL='https://adnxvlkosqowyfqatkum.supabase.co',SB_KEY='sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl',FS='xjygjjao',U='castellisab',H='gmail.com';
 var f=document.getElementById('f'),msg=document.getElementById('msg');
+var aw=document.getElementById('autre-wrap');f.besoin.addEventListener('change',function(){aw.hidden=f.besoin.value!=='Autre'});
 var map={activite:'p_activite',situation:'p_situation',salaries:'p_salaries',mails:'p_mails',rdv:'p_rdv',courrier:'p_courrier',fact:'p_fact',relances:'p_relances',devis:'p_devis',ferm:'p_ferm',logiciel:'p_logiciel'};
 f.addEventListener('submit',function(e){e.preventDefault();
  if(f._gotcha.value)return;
@@ -92,6 +96,8 @@ f.addEventListener('submit',function(e){e.preventDefault();
  var dl=[].map.call(f.querySelectorAll('input[name=p_deleg]:checked'),function(x){return x.value});if(dl.length)det.deleg=dl;
  var pr=f.querySelector('input[name=p_pref]:checked');if(pr)det.pref=pr.value;
  var ou=f.querySelector('input[name=p_outil]:checked');if(ou)det.outil=ou.value;
+ var cp=f.querySelector('input[name=p_compta]:checked');if(cp)det.comptable=cp.value;
+ if(f.besoin.value==='Autre'&&f.besoin_autre.value.trim())det.besoin_autre=f.besoin_autre.value.trim();
  var data={nom:f.nom.value,email:f.email.value,tel:f.tel.value,profil:'Professionnel',besoin:f.besoin.value,message:f.message.value,consentement:'oui',source:'site',date:new Date().toISOString(),details:det};
  var lines=Object.keys(det).map(function(k){return k+' : '+(Array.isArray(det[k])?det[k].join(', '):det[k])}).join('\n');
  var btn=f.querySelector('button[type=submit]');btn.disabled=true;msg.textContent='Envoi en cours…';
