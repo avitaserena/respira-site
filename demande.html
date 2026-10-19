@@ -41,10 +41,16 @@ main{max-width:720px}
 #msg{margin-top:16px;font-size:.92rem;color:var(--muted)}
 h1{font-size:2.1rem}
 .field:has(.radio-row){grid-column:1/-1}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:620px){.modes{grid-template-columns:1fr}}
+.mode{margin:0!important;cursor:pointer}.mode input{position:absolute;opacity:0;width:0}
+.mode span{display:block;border:1.5px solid #d8d1c3;border-radius:14px;padding:14px 16px;font-size:.88rem;line-height:1.45;background:#fff;height:100%}
+.mode span b{display:block;font-size:.98rem;margin-bottom:2px;color:var(--primary)}
+.mode input:checked+span{border-color:var(--primary);background:var(--card);box-shadow:0 0 0 3px rgba(110,107,78,.18)}
+#qs[hidden]{display:none}
 </style></head><body>
 <header><a href="index.html">Respirà</a></header><main>
 <h1>Parlons de votre besoin</h1>
-<p class="lead">Quelques informations pour que je vous envoie un devis juste dès ma première réponse, sous 24&nbsp;h. Seuls le nom et l'email sont indispensables : le reste est facultatif, « Je ne sais pas » est une réponse.</p>
+<p class="lead">Seuls le nom et l'email sont indispensables. Vous pouvez répondre à quelques questions pour recevoir un devis juste dès ma première réponse (sous 24&nbsp;h), ou simplement demander à être rappelé(e) : « Je ne sais pas » est toujours une réponse.</p>
 <form id="f">
 <div class="grid2">
 <div class="field"><label for="nom">Nom &amp; prénom</label><input type="text" id="nom" name="nom" required autocomplete="name" /></div>
@@ -53,6 +59,10 @@ h1{font-size:2.1rem}
 <div class="field"><label for="besoin">Votre besoin principal</label><select id="besoin" name="besoin"><option>Facturation &amp; relances</option><option>Courriers &amp; emails</option><option>Classement &amp; archives</option><option>Boîte mail &amp; agenda</option><option>Suivi de dossiers</option><option>Outils &amp; méthodes sur mesure</option><option>Tout ce que vous proposez</option><option>Autre</option></select></div>
 <div class="field" id="autre-wrap" hidden><label for="besoin_autre">Décrivez votre besoin</label><textarea id="besoin_autre" name="besoin_autre" rows="3" placeholder="Dites-moi en quelques mots ce que vous aimeriez déléguer…"></textarea></div>
 </div>
+<div class="field modebox"><label>Comment préférez-vous avancer ?</label>
+<div class="modes"><label class="mode"><input type="radio" name="mode" value="questions" checked /><span><b>Je réponds à quelques questions</b>Pour recevoir un devis juste dès ma première réponse, sous 24&nbsp;h.</span></label>
+<label class="mode"><input type="radio" name="mode" value="recontact" /><span><b>Je préfère être rappelé(e)</b>Pas de questions : je vous contacte directement pour en parler.</span></label></div></div>
+<div id="qs">
 <h2>Votre activité en quelques chiffres</h2>
 <div class="field"><label for="p_activite">Votre activité</label><input type="text" id="p_activite" name="p_activite" placeholder="Ex. : électricien, sophrologue, cabinet d'architecte…" /></div>
 <div class="grid2">
@@ -75,7 +85,10 @@ h1{font-size:2.1rem}
 <div class="field"><label>Une préférence de formule ?</label><div class="radio-row"><label><input type="radio" name="p_pref" value="Sérénité (10 h)" /><span>Sérénité (10 h)</span></label><label><input type="radio" name="p_pref" value="Confort (20 h)" /><span>Confort (20 h)</span></label><label><input type="radio" name="p_pref" value="À l'heure" /><span>À l'heure</span></label><label><input type="radio" name="p_pref" value="Je ne sais pas" /><span>Je ne sais pas</span></label></div></div>
         
 </div>
+</div>
 <div class="field"><label for="message">Autre chose à me dire ?</label><textarea id="message" name="message" placeholder="Une situation, une urgence, une question…"></textarea></div>
+<div class="field"><label for="origine">Où m'avez-vous connue ?</label><select id="origine" name="origine"><option value="">Je préfère ne pas répondre</option><option>Bouche à oreille</option><option>Recommandation d'un client</option><option>Recherche sur internet</option><option>LinkedIn</option><option>Malt</option><option>Rencontre ou événement local</option><option>Carte de visite ou QR code</option><option>Annuaire, réseau ou association professionnelle</option><option>Autre</option></select></div>
+<div class="field" id="orig-wrap" hidden><label for="origine_autre">Précisez</label><input type="text" id="origine_autre" name="origine_autre" /></div>
 <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true" />
 <label class="consent"><input type="checkbox" name="consent" required /><span>J'accepte que mes données soient utilisées pour répondre à ma demande, comme indiqué dans la <a href="politique-confidentialite.html">politique de confidentialité</a>.</span></label>
 <button class="btn" type="submit">Envoyer ma demande</button>
@@ -86,24 +99,30 @@ h1{font-size:2.1rem}
 <footer>© Respirà · <a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a></footer>
 <script>
 (function(){
-var SB_URL='https://adnxvlkosqowyfqatkum.supabase.co',SB_KEY='sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl',FS='xjygjjao',U='contact',H='xn--respir-nta.fr';
+var SB_URL='https://adnxvlkosqowyfqatkum.supabase.co',SB_KEY='sb_publishable_dpvK91eWjIc2dhpsZItd1w_uYIZMqJl',FS='xjygjjao',U='castellisab',H='gmail.com';
 var f=document.getElementById('f'),msg=document.getElementById('msg');
 var aw=document.getElementById('autre-wrap');f.besoin.addEventListener('change',function(){aw.hidden=f.besoin.value!=='Autre'});
+var qs=document.getElementById('qs'),ow=document.getElementById('orig-wrap');
+function mode(){return f.querySelector('input[name=mode]:checked').value}
+[].forEach.call(f.querySelectorAll('input[name=mode]'),function(r){r.addEventListener('change',function(){qs.hidden=mode()==='recontact'})});
+f.origine.addEventListener('change',function(){ow.hidden=f.origine.value!=='Autre'});
 var map={activite:'p_activite',situation:'p_situation',salaries:'p_salaries',mails:'p_mails',rdv:'p_rdv',courrier:'p_courrier',fact:'p_fact',relances:'p_relances',devis:'p_devis',ferm:'p_ferm',logiciel:'p_logiciel'};
 f.addEventListener('submit',function(e){e.preventDefault();
  if(f._gotcha.value)return;
- var det={};Object.keys(map).forEach(function(k){var v=f[map[k]].value;if(v)det[k]=v});
- var dl=[].map.call(f.querySelectorAll('input[name=p_deleg]:checked'),function(x){return x.value});if(dl.length)det.deleg=dl;
- var pr=f.querySelector('input[name=p_pref]:checked');if(pr)det.pref=pr.value;
- var ou=f.querySelector('input[name=p_outil]:checked');if(ou)det.outil=ou.value;
- var cp=f.querySelector('input[name=p_compta]:checked');if(cp)det.comptable=cp.value;
+ var det={},rec=mode()==='recontact';det.mode=rec?'À rappeler directement':'A répondu aux questions';
+ if(f.origine.value){det.origine=f.origine.value==='Autre'&&f.origine_autre.value.trim()?'Autre : '+f.origine_autre.value.trim():f.origine.value}
+ if(!rec)Object.keys(map).forEach(function(k){var v=f[map[k]].value;if(v)det[k]=v});
+ var dl=[].map.call(f.querySelectorAll('input[name=p_deleg]:checked'),function(x){return x.value});if(dl.length&&!rec)det.deleg=dl;
+ var pr=f.querySelector('input[name=p_pref]:checked');if(pr&&!rec)det.pref=pr.value;
+ var ou=f.querySelector('input[name=p_outil]:checked');if(ou&&!rec)det.outil=ou.value;
+ var cp=f.querySelector('input[name=p_compta]:checked');if(cp&&!rec)det.comptable=cp.value;
  if(f.besoin.value==='Autre'&&f.besoin_autre.value.trim())det.besoin_autre=f.besoin_autre.value.trim();
- var data={nom:f.nom.value,email:f.email.value,tel:f.tel.value,profil:'Professionnel',besoin:f.besoin.value,message:f.message.value,consentement:'oui',source:'site',date:new Date().toISOString(),details:det};
+ var data={nom:f.nom.value,email:f.email.value,tel:f.tel.value,profil:'Professionnel',besoin:rec?(f.besoin.value+' (à rappeler)'):f.besoin.value,message:f.message.value,consentement:'oui',source:'site',date:new Date().toISOString(),details:det};
  var lines=Object.keys(det).map(function(k){return k+' : '+(Array.isArray(det[k])?det[k].join(', '):det[k])}).join('\n');
  var btn=f.querySelector('button[type=submit]');btn.disabled=true;msg.textContent='Envoi en cours…';
- function fs(){return fetch('https://formspree.io/f/'+FS,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},body:JSON.stringify({nom:data.nom,email:data.email,tel:data.tel||'—',besoin:data.besoin,precisions:lines||'—',message:data.message||'—',_subject:'Demande via Respirà — '+data.besoin})})}
- function ok(){f.innerHTML='<h2>Merci, c\'est reçu.</h2><p>Je vous réponds sous 24&nbsp;h avec une première proposition.</p><p><a class="back" href="index.html">← Retour au site</a></p>';window.scrollTo(0,0)}
- function mail(){msg.innerHTML='Envoi impossible pour le moment. Écrivez-moi directement à contact@respirà.fr.';btn.disabled=false}
+ function fs(){return fetch('https://formspree.io/f/'+FS,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},body:JSON.stringify({nom:data.nom,email:data.email,tel:data.tel||'—',besoin:data.besoin,precisions:lines||'—',message:data.message||'—',_subject:(rec?'À RAPPELER — ':'')+'Demande via Respirà — '+data.besoin})})}
+ function ok(){f.innerHTML='<h2>Merci, c\'est reçu.</h2><p>'+(rec?'Je vous rappelle ou vous écris très vite pour en parler.':'Je vous réponds sous 24&nbsp;h avec une première proposition.')+'</p><p><a class="back" href="index.html">← Retour au site</a></p>';window.scrollTo(0,0)}
+ function mail(){msg.innerHTML='Envoi impossible pour le moment. Écrivez-moi directement à '+U+'@'+H+'.';btn.disabled=false}
  fetch(SB_URL+'/rest/v1/leads',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({data:data})})
  .then(function(r){if(!r.ok)throw 0;return Promise.race([fs().catch(function(){}),new Promise(function(r){setTimeout(r,2500)})])}).then(ok)
  .catch(function(){fs().then(function(r){r.ok?ok():mail()}).catch(mail)});
