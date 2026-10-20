@@ -952,8 +952,8 @@ function r0(keep){
  const byT={},byP={},byO={};all.forEach(c=>{const k=typeOf(c);byT[k]=(byT[k]||0)+1;const p=planOf(c);byP[p]=(byP[p]||0)+1;const o=toolOf(c);byO[o]=(byO[o]||0)+1});
  const conv=all.length?Math.round(actifs.length/all.length*100):0;
  const q=HQ.toLowerCase();
- let list=all.filter(c=>{const s=stat(c)[0];return hfOk(HF,s)&&(!HG||(c.tags||[]).includes(HG))&&(HT==='all'||typeOf(c)===HT)&&(HP==='all'||planOf(c)===HP)&&(!q||(c.name||'').toLowerCase().includes(q)||((c.S.v||{}).ville||'').toLowerCase().includes(q))});
- list.sort((a,b)=>HS==='name'?(a.name||'').localeCompare(b.name||''):HS==='type'?typeOf(a).localeCompare(typeOf(b)):HS==='amt'?devisTotal(b)-devisTotal(a):(b.upd||'').localeCompare(a.upd||''));
+ let list=all.filter(c=>{const s=stat(c)[0];return hfOk(HF,s,c)&&(!HG||(c.tags||[]).includes(HG))&&(HT==='all'||typeOf(c)===HT)&&(HP==='all'||planOf(c)===HP)&&(!q||(c.name||'').toLowerCase().includes(q)||((c.S.v||{}).ville||'').toLowerCase().includes(q))});
+ list.sort((a,b)=>HS==='name'?(a.name||'').localeCompare(b.name||''):HS==='type'?typeOf(a).localeCompare(typeOf(b)):HS==='amt'?devisTotal(b)-devisTotal(a):HS==='act'?(lastAct(a)||'').localeCompare(lastAct(b)||''):(b.upd||'').localeCompare(a.upd||''));
  const rows=list.map(c=>crowHtml(c)).join('');
  const sel=(a,cur2,opts,lab)=>`<select data-hsel="${a}" aria-label="${lab}">${opts.map(o=>`<option value="${o[0]}"${cur2===o[0]?' selected':''}>${o[1]}</option>`).join('')}</select>`;
  const html=`<div class="lab">Tableau de bord</div><h2 class="big">Mon activité.</h2><p class="sub">Les chiffres, ce qu'il ne faut pas oublier et tes clients au même endroit. Les données sont enregistrées dans ce navigateur : pense à exporter une sauvegarde.</p>
@@ -970,8 +970,8 @@ function r0(keep){
  <div class="card w"><h3>Formules choisies</h3>${sbars(byP,['Sérénité','Confort','À l\'heure','Aucune'])}</div>
  <div class="card w"><h3>Outils en ligne</h3>${sbars(byO,['Outil Complet','Outil Essentiel','Sans outil'])}</div></div>
  <div class="sech">Mes clients</div>
- <div class="fbar">${['actifs','all','Prospect','Devis envoyé','Client','Terminé','Perdu','Archivé'].map(f=>`<div class="chips" style="margin:0"><button data-f="${f}" class="${HF===f?'on':''}">${f==='all'?'Tous':f==='actifs'?'Actifs':f}</button></div>`).join('')}
- ${sel('t',HT,[['all','Tous les types']].concat(TYPES.map(x=>[x,x])),'Type')}${sel('p',HP,[['all','Toutes les formules'],['Sérénité','Sérénité'],['Confort','Confort'],['À l\'heure','À l\'heure'],['Aucune','Sans forfait']],'Formule')}${sel('s',HS,[['upd','Récents d\'abord'],['name','Nom'],['type','Type de client'],['amt','Montant du devis']],'Tri')}
+ <div class="fbar">${['actifs','all','Prospect','Devis envoyé','Client','retard','rappel','Terminé','Perdu','Archivé'].map(f=>`<div class="chips" style="margin:0"><button data-f="${f}" class="${HF===f?'on':''}">${f==='all'?'Tous':f==='actifs'?'Actifs':f==='retard'?'En retard de paiement':f==='rappel'?'À rappeler':f}</button></div>`).join('')}
+ ${sel('t',HT,[['all','Tous les types']].concat(TYPES.map(x=>[x,x])),'Type')}${sel('p',HP,[['all','Toutes les formules'],['Sérénité','Sérénité'],['Confort','Confort'],['À l\'heure','À l\'heure'],['Aucune','Sans forfait']],'Formule')}${sel('s',HS,[['upd','Récents d\'abord'],['name','Nom'],['type','Type de client'],['amt','Montant du devis'],['act','Dernière activité (la plus ancienne d\'abord)']],'Tri')}
  <input type="text" data-search="1" placeholder="Chercher un client…" value="${esc(HQ)}"></div>
  <div class="cbar"><div class="bk-btns" style="margin-left:auto"><button class="btn" id="newc">+ Nouveau client</button><button class="btn ghost" id="expo">Exporter</button><button class="btn ghost" id="impo">Importer</button><input type="file" id="hf" accept=".json" style="display:none"></div></div>
  ${rows||`<div class="card"><p class="s" style="margin:0">${all.length?'Aucun client ne correspond.':'Aucun client pour le moment. Clique sur « Nouveau client » pour commencer un rendez-vous.'}</p></div>`}`;
@@ -2020,7 +2020,10 @@ const _es4=extraStats;extraStats=function(){return _es4()+devStats()};
 
 /* ---- archivage ---- */
 const _stat4=stat;stat=function(c){if(c.arch)return['Archivé','pill'];return _stat4(c)};
-const hfOk=(h,s)=>h==='all'||(h==='actifs'?['Prospect','Devis envoyé','Client'].includes(s):h===s);
+const lateAmt=c=>(c.fact||[]).filter(f=>!f.void&&!f.paid&&f.due&&f.due<today()&&+f.amt>0).reduce((a,f)=>a+restF(f),0);
+const needCall=c=>(c.tags||[]).includes('À rappeler')||alerts().some(a=>a.c&&a.c.id===c.id&&/relanc/i.test(a.t));
+let _nc=null,_nct=0;const needCallC=c=>{if(!_nc||Date.now()-_nct>800){_nc=new Set(alerts().filter(a=>a.c&&/relanc/i.test(a.t)).map(a=>a.c.id));_nct=Date.now()}return (c.tags||[]).includes('À rappeler')||_nc.has(c.id)};
+const hfOk=(h,s,c)=>h==='all'||(h==='actifs'?['Prospect','Devis envoyé','Client'].includes(s):h==='retard'?(!!c&&!c.arch&&!c.closed&&!c.lost&&lateAmt(c)>0):h==='rappel'?(!!c&&!c.arch&&!c.closed&&!c.lost&&needCallC(c)):h===s);
 V4.arch=p=>{const c=cById(p[0]);if(!c)return;
  if(!c.arch){c.arch=today();c.archWC=!!c.closed;if(!c.closed){c.closed=true;c.closedOn=today()}jr(c,'Note','Fiche archivée.');audit(c.id,'Fiche archivée');toast(c.name+' archivé : retrouve-le dans le filtre « Archivé »')}
  else{c.arch=null;if(!c.archWC){c.closed=false;c.closedOn=''}jr(c,'Note','Fiche désarchivée.');audit(c.id,'Fiche désarchivée');toast('Fiche réactivée')}
